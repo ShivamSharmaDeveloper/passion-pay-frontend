@@ -1,7 +1,12 @@
 import { Box, Flex, Tooltip } from "@chakra-ui/react";
 import { MessagesLogo } from "../../assets/constants";
+import { useNavigate } from "react-router-dom";
 
 const Messages = () => {
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate('/direct/inbox');
+    };
     return (
         <Tooltip
             hasArrow
@@ -19,6 +24,7 @@ const Messages = () => {
                 p={2}
                 w={{ base: 10, md: "full" }}
                 justifyContent={{ base: "center", md: "flex-start" }}
+                onClick={handleClick}
             >
                 <MessagesLogo />
                 <Box display={{ base: "none", md: "block" }}>Messages</Box>

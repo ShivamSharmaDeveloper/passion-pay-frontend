@@ -3,6 +3,7 @@ import useShowToast from "./useShowToast";
 import { auth, firestore } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import useAuthStore from "../store/authStore";
+import { getLoginStatus, loggedin } from "../services/authService";
 
 const useLogin = () => {
 	const showToast = useShowToast();
@@ -15,12 +16,25 @@ const useLogin = () => {
 		}
 		try {
 			const userCred = await signInWithEmailAndPassword(inputs.email, inputs.password);
-
-			if (userCred) {
-				const docRef = doc(firestore, "users", userCred.user.uid);
-				const docSnap = await getDoc(docRef);
-				localStorage.setItem("user-info", JSON.stringify(docSnap.data()));
-				loginUser(docSnap.data());
+			let dataToSend = {
+				email: inputs.email,
+				password : inputs.password,
+			}
+			if(userCred){
+				let res = await loggedin(dataToSend);
+				// console.log(res, "response")
+				if (res && res.success) {
+					// let verifyLogin = getLoginStatus();
+					// console.log(verifyLogin)
+					// if(verifyLogin){
+						localStorage.setItem("user-info", JSON.stringify(res));
+						loginUser(res);
+					// }
+					// const docRef = doc(firestore, "users", userCred.user.uid);
+					// const docSnap = await getDoc(docRef);
+				} else {
+					showToast("Error", res.response?.data?.message || "Login failed", "error");
+				}
 			}
 		} catch (error) {
 			showToast("Error", error.message, "error");

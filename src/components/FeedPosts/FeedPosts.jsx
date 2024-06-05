@@ -25,7 +25,7 @@ const FeedPosts = () => {
 				))
 			)}
 
-			{!isLoading && posts.length > 0 && (
+			{!isLoading && posts?.length > 0 && (
 				<InfiniteScroll
 					dataLength={posts?.length}
 					next={fetchMorePosts}
@@ -51,7 +51,7 @@ const FeedPosts = () => {
 				</InfiniteScroll>
 			)}
 
-			{!isLoading && posts.length === 0 && (
+			{!isLoading && !posts && (
 				<>
 					<Text fontSize={"md"} color={"red.400"}>
 						Dayuum. Looks like you don&apos;t have any friends.

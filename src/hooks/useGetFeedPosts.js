@@ -3,8 +3,7 @@ import usePostStore from "../store/postStore";
 import useAuthStore from "../store/authStore";
 import useShowToast from "./useShowToast";
 import useUserProfileStore from "../store/userProfileStore";
-import { collection, getDocs, query, where, orderBy, startAfter, limit } from "firebase/firestore";
-import { firestore } from "../firebase/firebase";
+import { getMorePosts, getPosts } from "../services/postService";
 
 const useGetFeedPosts = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -18,47 +17,26 @@ const useGetFeedPosts = () => {
 
 	const getFeedPosts = async (lastDoc) => {
 		!lastDoc && setIsLoading(true);
-		if (authUser.following.length === 0) {
+		if (authUser?.following?.length === 0) {
 			setIsLoading(false);
 			setPosts([]);
 			return;
 		}
 
-		const q = lastDoc
-			? query(
-				collection(firestore, "posts"),
-				where("createdBy", "in", authUser.following),
-				orderBy("createdAt", "desc"),
-				startAfter(lastDoc),
-				limit(pageSize)
-			)
-			: query(
-				collection(firestore, "posts"),
-				where("createdBy", "in", authUser.following),
-				orderBy("createdAt", "desc"),
-				limit(pageSize)
-			);
-
 		try {
-			// debugger;
-			console.log(q)
-			const querySnapshot = await getDocs(q);
-			const feedPosts = [];
+			const { feedPosts, lastVisible: newLastVisible } = lastDoc
+				? await getMorePosts(authUser, lastDoc)
+				: await getPosts(authUser);
 
-			querySnapshot.forEach((doc) => {
-				feedPosts.push({ id: doc.id, ...doc.data() });
-			});
-
-			setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
+			setLastVisible(newLastVisible);
 
 			// If less than pageSize posts were fetched, it means there are no more posts
-			if (querySnapshot.docs.length < pageSize) {
+			if (feedPosts.length < pageSize) {
 				setHasMore(false);
 			}
-			console.log(feedPosts)
+
 			return feedPosts;
 		} catch (error) {
-			console.log(error)
 			showToast("Error", error.message, "error");
 			return [];
 		} finally {
@@ -73,7 +51,7 @@ const useGetFeedPosts = () => {
 
 	const fetchMorePosts = async () => {
 		const morePosts = await getFeedPosts(lastVisible);
-		setPosts([...posts, ...morePosts]);
+		setPosts(morePosts);
 	};
 
 	useEffect(() => {

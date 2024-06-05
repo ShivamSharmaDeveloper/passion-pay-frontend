@@ -3,6 +3,7 @@ import { auth, firestore } from "../firebase/firebase";
 import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 import useShowToast from "./useShowToast";
 import useAuthStore from "../store/authStore";
+import { registerLogin } from "../services/authService";
 
 const useSignUpWithEmailAndPassword = () => {
 	const [createUserWithEmailAndPassword, , loading, error] = useCreateUserWithEmailAndPassword(auth);
@@ -35,18 +36,19 @@ const useSignUpWithEmailAndPassword = () => {
 				const userDoc = {
 					uid: newUser.user.uid,
 					email: inputs.email,
-					username: inputs.username,
-					fullName: inputs.fullName,
-					bio: "",
-					profilePicURL: "",
-					followers: [],
-					following: [],
-					posts: [],
-					createdAt: Date.now(),
+					userName: inputs.username,
+					name: inputs.fullName,
+					password: inputs.password
 				};
-				await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
-				localStorage.setItem("user-info", JSON.stringify(userDoc));
-				loginUser(userDoc);
+				// await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
+				let res = await registerLogin(userDoc);
+				if(res && res.success){
+					// console.log(res, "res")
+					localStorage.setItem("user-info", JSON.stringify(res));
+					loginUser(userDoc);
+				} else {
+					showToast("Error", res?.response?.data?.message, "error");
+				}
 			}
 		} catch (error) {
 			showToast("Error", error.message, "error");
