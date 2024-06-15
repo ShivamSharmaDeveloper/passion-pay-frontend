@@ -3,11 +3,17 @@ import useUserProfileStore from "../../store/userProfileStore";
 import useAuthStore from "../../store/authStore";
 import EditProfile from "./EditProfile";
 import useFollowUser from "../../hooks/useFollowUser";
+import FollowedUsersModal from "./FollowedUsersModal";
+import { useState } from "react";
 
 const ProfileHeader = () => {
 	const { userProfile } = useUserProfileStore();
+	const [showing, setShowing] = useState("following");  // 'followers' or 'following'
 	const authUser = useAuthStore((state) => state.user);
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	// State to manage the modal for following users
+	const { isOpen: isFollowingModalOpen, onOpen: openFollowingModal, onClose: closeFollowingModal } = useDisclosure();
+
 	const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(userProfile?.uid);
 	const visitingOwnProfileAndAuth = authUser && authUser.username === userProfile.username;
 	const visitingAnotherProfileAndAuth = authUser && authUser.username !== userProfile.username;
@@ -63,13 +69,13 @@ const ProfileHeader = () => {
 						</Text>
 						Posts
 					</Text>
-					<Text fontSize={{ base: "xs", md: "sm" }}>
+					<Text fontSize={{ base: "xs", md: "sm" }} onClick={() => { setShowing("followers"); openFollowingModal();}} cursor={'pointer'}>
 						<Text as='span' fontWeight={"bold"} mr={1}>
 							{userProfile.followers.length}
 						</Text>
 						Followers
 					</Text>
-					<Text fontSize={{ base: "xs", md: "sm" }}>
+					<Text fontSize={{ base: "xs", md: "sm" }} onClick={() => { setShowing("following"); openFollowingModal(); }} cursor={'pointer'}>
 						<Text as='span' fontWeight={"bold"} mr={1}>
 							{userProfile.following.length}
 						</Text>
@@ -84,6 +90,7 @@ const ProfileHeader = () => {
 				<Text fontSize={"sm"}>{userProfile.bio}</Text>
 			</VStack>
 			{isOpen && <EditProfile isOpen={isOpen} onClose={onClose} />}
+			{isFollowingModalOpen && <FollowedUsersModal isOpen={isFollowingModalOpen} onClose={closeFollowingModal} showing={showing} userProfile={userProfile} />}
 		</Flex>
 	);
 };

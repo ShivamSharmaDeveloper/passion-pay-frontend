@@ -11,7 +11,8 @@ const AuthForm = () => {
 		<>
 			<Box border={"1px solid gray"} borderRadius={4} padding={5}>
 				<VStack spacing={4}>
-					<Image src='/logo2.png' h={10} cursor={"pointer"} alt='Instagram' />
+					<Text fontSize={'40px'} fontFamily={'"Satisfy", cursive'}>PassionPay</Text>
+					{/* <Image src='/logo.png' h={20} cursor={"pointer"} alt='Instagram' /> */}
 
 					{isLogin ? <Login /> : <Signup />}
 

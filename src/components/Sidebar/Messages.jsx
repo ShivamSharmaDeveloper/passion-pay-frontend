@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Messages = () => {
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate('/direct/inbox');
+        // navigate('/direct');
     };
     return (
         <Tooltip

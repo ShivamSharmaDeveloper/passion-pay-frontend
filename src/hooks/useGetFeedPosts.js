@@ -3,7 +3,8 @@ import usePostStore from "../store/postStore";
 import useAuthStore from "../store/authStore";
 import useShowToast from "./useShowToast";
 import useUserProfileStore from "../store/userProfileStore";
-import { getMorePosts, getPosts } from "../services/postService";
+import { collection, getDocs, query, where, orderBy, startAfter, limit } from "firebase/firestore";
+import { firestore } from "../firebase/firebase";
 
 const useGetFeedPosts = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -23,20 +24,40 @@ const useGetFeedPosts = () => {
 			return;
 		}
 
-		try {
-			const { feedPosts, lastVisible: newLastVisible } = lastDoc
-				? await getMorePosts(authUser, lastDoc)
-				: await getPosts(authUser);
+		const q = lastDoc
+			? query(
+				collection(firestore, "posts"),
+				where("createdBy", "in", authUser.following),
+				orderBy("createdAt", "desc"),
+				startAfter(lastDoc),
+				limit(pageSize)
+			)
+			: query(
+				collection(firestore, "posts"),
+				where("createdBy", "in", authUser.following),
+				orderBy("createdAt", "desc"),
+				limit(pageSize)
+			);
 
-			setLastVisible(newLastVisible);
+		try {
+			// debugger;
+			console.log(q)
+			const querySnapshot = await getDocs(q);
+			const feedPosts = [];
+
+			querySnapshot.forEach((doc) => {
+				feedPosts.push({ id: doc.id, ...doc.data() });
+			});
+
+			setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]);
 
 			// If less than pageSize posts were fetched, it means there are no more posts
-			if (feedPosts.length < pageSize) {
+			if (querySnapshot.docs.length < pageSize) {
 				setHasMore(false);
 			}
-
 			return feedPosts;
 		} catch (error) {
+			console.log(error)
 			showToast("Error", error.message, "error");
 			return [];
 		} finally {
@@ -51,7 +72,7 @@ const useGetFeedPosts = () => {
 
 	const fetchMorePosts = async () => {
 		const morePosts = await getFeedPosts(lastVisible);
-		setPosts(morePosts);
+		setPosts([...posts, ...morePosts]);
 	};
 
 	useEffect(() => {

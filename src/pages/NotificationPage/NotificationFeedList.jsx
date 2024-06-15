@@ -25,9 +25,13 @@ const NotificationFeedList = ({ notification }) => {
     
     if (isLoading) return <NotificationSkeleton />
     const handleNotificationClick = async (id) => {
-        await getPost(id);
-        onOpen();
+        debugger;
+        const havePost = await getPost(id);
+        if (havePost){
+            onOpen();
+        }
     }
+    console.log(posts)
     return (
         <>
             <Flex gap={4} key={notification.id} cursor={'pointer'} py={3} onClick={() => handleNotificationClick(notification?.postId)}>

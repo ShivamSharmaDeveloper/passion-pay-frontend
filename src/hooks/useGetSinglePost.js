@@ -21,9 +21,11 @@ const useGetSinglePost = () => {
 
             if (postDoc.exists()) {
                 setPosts({ ...postDoc.data(), id: postDoc.id });
+                return true;
             } else {
-                showToast("Error", "Post not found", "error");
+                showToast("", "Oops! Post not found", "error");
                 setPosts([]);
+                return false;
             }
         } catch (error) {
             showToast("Error", error.message, "error");

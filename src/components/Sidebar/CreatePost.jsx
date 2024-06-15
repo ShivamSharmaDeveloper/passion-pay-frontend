@@ -12,6 +12,7 @@ import {
 	ModalFooter,
 	ModalHeader,
 	ModalOverlay,
+	Text,
 	Textarea,
 	Tooltip,
 	useDisclosure,
@@ -47,7 +48,6 @@ const CreatePost = () => {
 			showToast("Error", error.message, "error");
 		}
 	};
-
 	return (
 		<>
 			<Tooltip
@@ -80,32 +80,43 @@ const CreatePost = () => {
 					<ModalHeader>Create Post</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody pb={6}>
-						<Textarea
-							placeholder='Post caption...'
-							value={caption}
-							onChange={(e) => setCaption(e.target.value)}
-						/>
-
-						<Input type='file' hidden ref={imageRef} onChange={handleImageChange} />
-
-						<BsFillImageFill
-							onClick={() => imageRef.current.click()}
-							style={{ marginTop: "15px", marginLeft: "5px", cursor: "pointer" }}
-							size={16}
-						/>
 						{selectedFile && (
-							<Flex mt={5} w={"full"} position={"relative"} justifyContent={"center"}>
-								<Image src={selectedFile} alt='Selected img' />
+							<Flex mt={5} w={"full"} position={"relative"} justifyContent={"center"} pb={6}>
+								{selectedFile.startsWith("data:video/") ? <video controls>
+									<source src={selectedFile} type={selectedFile.type} />
+									Your browser does not support the video tag.
+								</video> :
+									<Image src={selectedFile} alt='Selected img' />
+								}
 								<CloseButton
 									position={"absolute"}
 									top={2}
 									right={2}
+									filter={'invert(1'}
 									onClick={() => {
 										setSelectedFile(null);
 									}}
 								/>
 							</Flex>
 						)}
+						<Textarea
+							placeholder='Post caption...'
+							value={caption}
+							onChange={(e) => setCaption(e.target.value)}
+							resize={'none'}
+							maxLength={200}
+						/>
+						<Box display={'flex'} justifyContent={selectedFile ? 'flex-end' : 'space-between'} alignItems={selectedFile ? 'flex-end' : 'center'}>
+							<Input type='file' hidden ref={imageRef} onChange={handleImageChange} />
+
+							{!selectedFile &&
+								<BsFillImageFill
+									onClick={() => imageRef.current.click()}
+									style={{ marginTop: "15px", marginLeft: "5px", cursor: "pointer" }}
+									size={16}
+								/>}
+							<Text>{caption.length}/200</Text>
+						</Box>
 					</ModalBody>
 
 					<ModalFooter>
@@ -139,12 +150,13 @@ function useCreatePost() {
 			likes: [],
 			comments: [],
 			createdAt: Date.now(),
-			createdBy: authUser.uid,
+			createdBy: authUser?.uid,
+			type: selectedFile.startsWith("data:image/") ? "image" : "video"
 		};
 
 		try {
 			const postDocRef = await addDoc(collection(firestore, "posts"), newPost);
-			const userDocRef = doc(firestore, "users", authUser.uid);
+			const userDocRef = doc(firestore, "users", authUser?.uid);
 			const imageRef = ref(storage, `posts/${postDocRef.id}`);
 
 			await updateDoc(userDocRef, { posts: arrayUnion(postDocRef.id) });
@@ -155,7 +167,7 @@ function useCreatePost() {
 
 			newPost.imageURL = downloadURL;
 
-			if (userProfile.uid === authUser.uid) createPost({ ...newPost, id: postDocRef.id });
+			if (userProfile?.uid === authUser?.uid) createPost({ ...newPost, id: postDocRef.id });
 
 			if (pathname !== "/" && userProfile.uid === authUser.uid) addPost({ ...newPost, id: postDocRef.id });
 

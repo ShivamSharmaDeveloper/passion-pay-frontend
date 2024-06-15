@@ -8,7 +8,16 @@ const Login = () => {
 		password: "",
 	});
 	const { loading, error, login } = useLogin();
-
+	let errorMessage = "Something went wrong. Please try again.";
+	if (error) {
+		if (error.code === "auth/invalid-login-credentials") {
+			errorMessage = "Wrong email and password.";
+		} else if (error.code === "auth/invalid-email") {
+			errorMessage = "Invalid email address.";
+		} else if (error.code === "auth/network-request-failed") {
+			errorMessage = "Network error. Please check your internet connection.";
+		}
+	}
 	return (
 		<>
 			<Input
@@ -30,7 +39,7 @@ const Login = () => {
 			{error && (
 				<Alert status='error' fontSize={13} p={2} borderRadius={4}>
 					<AlertIcon fontSize={12} />
-					{error.message ? error.code === "auth/invalid-email" ? "Please enter valid email" : error.code === "auth/invalid-login-credentials" ? "Wrong email and password" : "Somthing went wrong" : error.message}
+					{errorMessage}
 				</Alert>
 			)}
 			<Button

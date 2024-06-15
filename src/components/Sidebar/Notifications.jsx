@@ -8,7 +8,6 @@ const Notifications = ({ authUser }) => {
 	const navigate = useNavigate();
 	const { notifications, clearNotifications } = useNotificationStore();
 
-	console.log(notifications, 'notifi')
 	useEffect(() => {
 		if (authUser) {
 			fetchNotifications(authUser.uid);

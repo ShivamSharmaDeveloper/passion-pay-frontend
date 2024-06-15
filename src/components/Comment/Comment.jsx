@@ -8,7 +8,7 @@ const Comment = ({ comment }) => {
 
 	if (isLoading) return <CommentSkeleton />;
 	return (
-		<Flex gap={4}>
+		<Flex gap={4} key={comment.id}>
 			<Link to={`/${userProfile.username}`}>
 				<Avatar src={userProfile.profilePicURL} size={"sm"} />
 			</Link>

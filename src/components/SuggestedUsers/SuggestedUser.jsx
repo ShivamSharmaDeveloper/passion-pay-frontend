@@ -4,7 +4,7 @@ import useAuthStore from "../../store/authStore";
 import { Link } from "react-router-dom";
 
 const SuggestedUser = ({ user, setUser }) => {
-	const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(user.uid);
+	const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(user?.uid);
 	const authUser = useAuthStore((state) => state.user);
 
 	const onFollowUser = async () => {
@@ -12,7 +12,7 @@ const SuggestedUser = ({ user, setUser }) => {
 		setUser({
 			...user,
 			followers: isFollowing
-				? user.followers.filter((follower) => follower.uid !== authUser.uid)
+				? user?.followers.filter((follower) => follower?.uid !== authUser?.uid)
 				: [...user.followers, authUser],
 		});
 	};
@@ -20,21 +20,21 @@ const SuggestedUser = ({ user, setUser }) => {
 	return (
 		<Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
 			<Flex alignItems={"center"} gap={2}>
-				<Link to={`/${user.username}`}>
-					<Avatar src={user.profilePicURL} size={"md"} />
+				<Link to={`/${user?.username}`}>
+					<Avatar src={user?.profilePicURL} size={"md"} />
 				</Link>
 				<VStack spacing={2} alignItems={"flex-start"}>
-					<Link to={`/${user.username}`}>
+					<Link to={`/${user?.username}`}>
 						<Box fontSize={12} fontWeight={"bold"}>
-							{user.fullName}
+							{user?.username}
 						</Box>
 					</Link>
 					<Box fontSize={11} color={"gray.500"}>
-						{user.followers.length} followers
+						{user?.followers?.length} followers
 					</Box>
 				</VStack>
 			</Flex>
-			{authUser.uid !== user.uid && (
+			{authUser?.uid !== user?.uid && (
 				<Button
 					fontSize={13}
 					bg={"transparent"}

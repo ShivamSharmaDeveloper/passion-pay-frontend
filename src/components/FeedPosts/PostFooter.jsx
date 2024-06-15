@@ -31,9 +31,9 @@ const PostFooter = ({ post, isProfilePage, creatorProfile }) => {
 					<CommentLogo />
 				</Box>
 			</Flex>
-			<Text fontWeight={600} fontSize={"sm"}>
+			{likes !== 0 && <Text fontWeight={600} fontSize={"sm"}>
 				{likes} likes
-			</Text>
+			</Text>}
 
 			{isProfilePage && (
 				<Text fontSize='12' color={"gray"}>

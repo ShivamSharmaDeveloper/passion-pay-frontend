@@ -14,7 +14,8 @@ const GoogleAuth = ({ prefix }) => {
 		try {
 			const newUser = await signInWithGoogle();
 			if (!newUser && error) {
-				showToast("Error", error.message, "error");
+				console.log(error.code)
+				showToast("Error", error.code === 'auth/popup-closed-by-user' ? 'Please try again' : error.message, "error");
 				return;
 			}
 			const userRef = doc(firestore, "users", newUser.user.uid);
@@ -38,15 +39,21 @@ const GoogleAuth = ({ prefix }) => {
 					following: [],
 					posts: [],
 					createdAt: Date.now(),
+					privateAccount: false,
+					messagingUsers: [],
+					followingRequest: [],
+					likedPosts: [],
+					savedPosts: [],
 				};
 				await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
 				localStorage.setItem("user-info", JSON.stringify(userDoc));
 				loginUser(userDoc);
 			}
 		} catch (error) {
-			showToast("Error", error.message, "error");
+			console.log(error.message, error.code)
+			showToast("Error", 'Please try again', "error");
 		}
-	};
+	};	
 
 	return (
 		<Flex alignItems={"center"} justifyContent={"center"} cursor={"pointer"} onClick={handleGoogleAuth}>

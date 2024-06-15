@@ -19,3 +19,12 @@ export async function getMorePosts(authUser, lastVisible) {
         throw error;
     }
 }
+
+export async function addComment(postId, userId, comment) {
+    try {
+        const response = await axios.post("http://localhost:5000/api/posts/addComment", { postId, userId, comment }, { withCredentials: true });
+        return response.data;
+    } catch (error) {
+        throw error.response ? error.response.data : error;
+    }
+}

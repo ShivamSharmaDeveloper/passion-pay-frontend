@@ -12,7 +12,18 @@ const Signup = () => {
 	});
 	const [showPassword, setShowPassword] = useState(false);
 	const { loading, error, signup } = useSignUpWithEmailAndPassword();
-
+	let errorMessage = "Something went wrong. Please try again.";
+	if (error) {
+		if (error.code === "auth/email-already-in-use") {
+			errorMessage = "Email is already registered. Please log in.";
+		} else if (error.code === "auth/invalid-email") {
+			errorMessage = "Invalid email address.";
+		} else if (error.code === "auth/weak-password") {
+			errorMessage = "Password should be at least 6 characters.";
+		} else if (error.code === "auth/network-request-failed") {
+			errorMessage = "Network error. Please check your internet connection.";
+		}
+	}
 	return (
 		<>
 			<Input
@@ -58,7 +69,7 @@ const Signup = () => {
 			{error && error.code !== "auth/email-already-in-use" && (
 				<Alert status='error' fontSize={13} p={2} borderRadius={4}>
 					<AlertIcon fontSize={12} />
-					{error.message}
+					{errorMessage}
 				</Alert>
 			)}
 

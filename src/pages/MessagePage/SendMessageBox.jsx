@@ -28,8 +28,8 @@ function SendMessageBox({MessageCss}) {
                     <div style={{margin:"0 auto"}}>New Message</div>
                 </div>
                 <div className={MessageCss.message_page_send_message_box_search_area}>
-                    <div>To:</div>
-                    <input onChange={event => getSearchedUser(event.target.value)} style={{marginLeft:"30px", border:0, outline:0}} type="text" autoComplete="off" placeholder="Search..." spellCheck={false}/>
+                    <div style={{color: '#333'}}>To:</div>
+                    <input onChange={event => getSearchedUser(event.target.value)} style={{marginLeft:"30px", border:0, outline:0, padding: '5px 10px', borderRadius: '20px'}} type="text" autoComplete="off" placeholder="Search..." spellCheck={false} />
                 </div>
                 <div style={{}} className={MessageCss.message_page_send_message_box_result_area}>
                     <div style={{fontWeight:"bold",margin:"16px"}}>Suggested</div>

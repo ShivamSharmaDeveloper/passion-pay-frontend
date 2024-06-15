@@ -100,7 +100,7 @@ const EditProfile = ({ isOpen, onClose }) => {
 								<FormControl>
 									<FormLabel fontSize={"sm"}>Bio</FormLabel>
 									<Input
-										placeholder={"Bio"}
+										placeholder={"bio goes here"}
 										size={"sm"}
 										type={"text"}
 										value={inputs.bio || authUser.bio}

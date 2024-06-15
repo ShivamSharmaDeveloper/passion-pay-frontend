@@ -1,5 +1,6 @@
 import {
 	Avatar,
+	Box,
 	Button,
 	Divider,
 	Flex,
@@ -28,9 +29,12 @@ import { firestore, storage } from "../../firebase/firebase";
 import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import usePostStore from "../../store/postStore";
 import Caption from "../Comment/Caption";
+import VideoPlayer from "../FeedPosts/VideoPlayer";
+import DeletePostModal from "./DeletePostModal";  // Import the modal
 
 const ProfilePost = ({ post }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const deleteModal = useDisclosure(); // Hook for DeletePostModal
 	const userProfile = useUserProfileStore((state) => state.userProfile);
 	const authUser = useAuthStore((state) => state.user);
 	const showToast = useShowToast();
@@ -39,22 +43,25 @@ const ProfilePost = ({ post }) => {
 	const decrementPostsCount = useUserProfileStore((state) => state.deletePost);
 
 	const handleDeletePost = async () => {
-		if (!window.confirm("Are you sure you want to delete this post?")) return;
 		if (isDeleting) return;
-
+		setIsDeleting(true);
 		try {
 			const imageRef = ref(storage, `posts/${post.id}`);
 			await deleteObject(imageRef);
 			const userRef = doc(firestore, "users", authUser.uid);
 			await deleteDoc(doc(firestore, "posts", post.id));
 
+			// Update the user's document
 			await updateDoc(userRef, {
 				posts: arrayRemove(post.id),
+				likedPosts: arrayRemove(post.id),
+				savedPosts: arrayRemove(post.id),
 			});
 
 			deletePost(post.id);
 			decrementPostsCount(post.id);
 			showToast("Success", "Post deleted successfully", "success");
+			deleteModal.onClose(); // Close the delete modal after successful deletion
 		} catch (error) {
 			showToast("Error", error.message, "error");
 		} finally {
@@ -65,13 +72,15 @@ const ProfilePost = ({ post }) => {
 	return (
 		<>
 			<GridItem
+				display={'flex'}
+				alignItems={'center'}
 				cursor={"pointer"}
 				borderRadius={4}
 				overflow={"hidden"}
 				border={"1px solid"}
 				borderColor={"whiteAlpha.300"}
 				position={"relative"}
-				aspectRatio={1 / 1}
+				aspectRatio={2 / 1}
 				onClick={onOpen}
 			>
 				<Flex
@@ -103,14 +112,15 @@ const ProfilePost = ({ post }) => {
 						</Flex>
 					</Flex>
 				</Flex>
-
-				<Image src={post.imageURL} alt='profile post' w={"100%"} h={"100%"} objectFit={"cover"} />
+				{post.type === 'video' ?
+					<VideoPlayer video={post.imageURL} maxH={'100%'} /> :
+					<Image src={post.imageURL} alt='profile post' w={"100%"} h={"100%"} objectFit={"cover"} />}
 			</GridItem>
 
 			<Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: "3xl", md: "5xl" }}>
 				<ModalOverlay />
 				<ModalContent>
-					<ModalCloseButton />
+					<ModalCloseButton filter={'invert(1)'}/>
 					<ModalBody bg={"black"} pb={5}>
 						<Flex
 							gap='4'
@@ -131,7 +141,44 @@ const ProfilePost = ({ post }) => {
 								maxW={"80vw"}
 								minW={"30vw"}
 							>
-								<Image src={post.imageURL} alt='profile post' maxH={'70vh'} />
+								{post.type === 'video' ?
+									<VideoPlayer video={post.imageURL} maxH={'70vh'} /> : (
+										<Box
+											position="relative"
+											width="100%"
+											height="500px"
+											maxWidth="600px"
+											display="flex"
+											justifyContent="center"
+											alignItems="center"
+										>
+											{/* Blurred Background */}
+											<Box
+												position="absolute"
+												top={0}
+												left={0}
+												width="100%"
+												height="100%"
+												backgroundImage={`url(${post.imageURL})`}
+												backgroundSize="cover"
+												backgroundPosition="center"
+												filter="blur(20px)"
+												zIndex={0}
+											/>
+											{/* Foreground Image */}
+											<Image
+												src={post.imageURL}
+												alt="FEED POST IMG"
+												position="relative"
+												zIndex={1}
+												maxHeight="70vh"
+												// maxWidth="100%"
+												objectFit="contain"
+											/>
+										</Box>
+									)
+									// <Image src={post.imageURL} alt='profile post' maxH={'70vh'} />
+								}
 							</Flex>
 							<Flex flex={1} flexDir={"column"} px={10} display={{ base: "flex", md: "flex" }}>
 								<Flex alignItems={"center"} justifyContent={"space-between"}>
@@ -145,11 +192,12 @@ const ProfilePost = ({ post }) => {
 									{authUser?.uid === userProfile.uid && (
 										<Button
 											size={"sm"}
+											colorScheme="red"
+											onClick={deleteModal.onOpen}  // Open DeletePostModal
 											bg={"transparent"}
 											_hover={{ bg: "whiteAlpha.300", color: "red.600" }}
 											borderRadius={4}
 											p={1}
-											onClick={handleDeletePost}
 											isLoading={isDeleting}
 										>
 											<MdDelete size={20} cursor='pointer' />
@@ -159,15 +207,20 @@ const ProfilePost = ({ post }) => {
 								{post.caption && <Caption post={post} />}
 								<Divider my={4} bg={"gray.500"} />
 
-								<VStack w='full' alignItems={"start"} maxH={"350px"} overflowY={"auto"}>
-									{/* CAPTION */}
-									{/* {post.caption && <Caption post={post} showUser={true} />} */}
-									{/* COMMENTS */}
+								<VStack
+									alignItems={"flex-start"}
+									overflowY={"auto"}
+									maxH={"45vh"}
+									spacing={3}
+								>
 									{post.comments.map((comment) => (
-										<Comment key={comment.id} comment={comment} />
+										<Comment
+											key={comment.id}
+											comment={comment}
+										/>
 									))}
 								</VStack>
-								<Divider my={4} bg={"gray.8000"} />
+								{post.comments.length !== 0 && <Divider my={4} bg={"gray.8000"} />}
 
 								<PostFooter isProfilePage={true} post={post} />
 							</Flex>
@@ -175,6 +228,12 @@ const ProfilePost = ({ post }) => {
 					</ModalBody>
 				</ModalContent>
 			</Modal>
+
+			{deleteModal.isOpen && <DeletePostModal  // Render the delete modal
+				isOpen={deleteModal.isOpen}
+				onClose={deleteModal.onClose}
+				onDelete={handleDeletePost}
+			/>}
 		</>
 	);
 };
