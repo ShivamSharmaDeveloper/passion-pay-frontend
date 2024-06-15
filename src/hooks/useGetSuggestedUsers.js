@@ -19,7 +19,7 @@ const useGetSuggestedUsers = () => {
 					usersRef,
 					where("uid", "not-in", [authUser.uid, ...authUser.following]),
 					orderBy("uid"),
-					limit(3)
+					limit()
 				);
 
 				const querySnapshot = await getDocs(q);

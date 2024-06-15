@@ -9,12 +9,14 @@ const SuggestedUser = ({ user, setUser }) => {
 
 	const onFollowUser = async () => {
 		await handleFollowUser();
-		setUser({
-			...user,
-			followers: isFollowing
+		if(setUser){
+			setUser({
+				...user,
+				followers: isFollowing
 				? user?.followers.filter((follower) => follower?.uid !== authUser?.uid)
 				: [...user.followers, authUser],
-		});
+			});
+		}
 	};
 
 	return (

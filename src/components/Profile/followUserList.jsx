@@ -2,7 +2,7 @@ import { Avatar, Button, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
 import useFollowUser from '../../hooks/useFollowUser';
 
-const FollowUserList = ({user, authUser}) => {
+const FollowUserList = ({ user, authUser, visitingAnotherProfileAndAuth }) => {
     const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(user?.uid);
 
   return (
@@ -11,7 +11,7 @@ const FollowUserList = ({user, authUser}) => {
               <Avatar src={user.profilePicURL} alt={user.username} />
               <Text>{user.username}</Text>
           </Flex>
-          {authUser?.uid !== user?.uid && <Button
+          {authUser?.uid !== user?.uid && !visitingAnotherProfileAndAuth && <Button
               fontSize={13}
               bg={"transparent"}
               p={0}

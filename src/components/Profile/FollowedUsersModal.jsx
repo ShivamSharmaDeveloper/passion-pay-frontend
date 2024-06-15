@@ -18,19 +18,30 @@ import fetchFollowedUsers from "../../hooks/usefetchFollowedUsers"; // Adjust pa
 import useFollowUser from "../../hooks/useFollowUser";
 import FollowUserList from "./followUserList";
 
-const FollowedUsersModal = ({ isOpen, onClose, showing, userProfile, id }) => {
+const FollowedUsersModal = ({ isOpen, onClose, showing, userProfile, visitingAnotherProfileAndAuth }) => {
     const [followedUsers, setFollowedUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const authUser = useAuthStore((state) => state.user);
 
     useEffect(() => {
-        if (isOpen && authUser) {
-            setIsLoading(true);
-            let followType = showing === "followers" ? "following" : "followers";
-            fetchFollowedUsers(authUser.uid, followType).then((users) => {
-                setFollowedUsers(users);
-                setIsLoading(false);
-            });
+        if (visitingAnotherProfileAndAuth){
+            if (isOpen && userProfile) {
+                setIsLoading(true);
+                let followType = showing === "followers" ? "following" : "followers";
+                fetchFollowedUsers(userProfile.uid, followType).then((users) => {
+                    setFollowedUsers(users);
+                    setIsLoading(false);
+                });
+            }
+        }else{
+            if (isOpen && authUser) {
+                setIsLoading(true);
+                let followType = showing === "followers" ? "following" : "followers";
+                fetchFollowedUsers(authUser.uid, followType).then((users) => {
+                    setFollowedUsers(users);
+                    setIsLoading(false);
+                });
+            }
         }
     }, [isOpen, authUser, showing]);
     
@@ -46,10 +57,10 @@ const FollowedUsersModal = ({ isOpen, onClose, showing, userProfile, id }) => {
                             <Spinner size="lg" />
                         </Flex>
                     ) : (
-                        <Flex direction="column" gap={2}>
+                        <Flex direction="column" gap={2} sx={{maxHeight: '380px', overflow: 'auto', scrollbarWidth: 'none'}}>
                             {followedUsers.length > 0 ? (
                                 followedUsers.map((user) => (
-                                    <FollowUserList user={user} authUser={authUser} key={user.id} />
+                                    <FollowUserList user={user} authUser={authUser} key={user.id} visitingAnotherProfileAndAuth={visitingAnotherProfileAndAuth} />
                                 ))
                             ) : (
                                 <Box>No followed users found.</Box>

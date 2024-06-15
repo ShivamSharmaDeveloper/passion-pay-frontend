@@ -32,6 +32,7 @@ const useFollowUser = (userId) => {
 					...authUser,
 					following: authUser.following.filter((uid) => uid !== userId),
 				});
+				
 				if (userProfile)
 					setUserProfile({
 						...userProfile,

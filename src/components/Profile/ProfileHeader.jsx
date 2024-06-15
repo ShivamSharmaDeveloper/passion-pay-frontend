@@ -90,7 +90,7 @@ const ProfileHeader = () => {
 				<Text fontSize={"sm"}>{userProfile.bio}</Text>
 			</VStack>
 			{isOpen && <EditProfile isOpen={isOpen} onClose={onClose} />}
-			{isFollowingModalOpen && <FollowedUsersModal isOpen={isFollowingModalOpen} onClose={closeFollowingModal} showing={showing} userProfile={userProfile} />}
+			{isFollowingModalOpen && <FollowedUsersModal isOpen={isFollowingModalOpen} onClose={closeFollowingModal} showing={showing} userProfile={userProfile} visitingAnotherProfileAndAuth={visitingAnotherProfileAndAuth} />}
 		</Flex>
 	);
 };
