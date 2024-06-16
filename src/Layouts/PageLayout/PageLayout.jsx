@@ -23,7 +23,7 @@ const PageLayout = ({ children }) => {
 				// <Box w={{ base: "70px", md: "212px" }}>
 				<Box w={{ base: "100%", md: "212px" }}
 					h={{ base: "70px", md: "100%" }}
-					position={"sticky"}
+					position={{md: "sticky", base: 'fixed'}}
 					bottom={0}
 					left={0}
 					bg="gray.800"

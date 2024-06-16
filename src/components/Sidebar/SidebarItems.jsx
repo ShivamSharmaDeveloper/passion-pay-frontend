@@ -12,7 +12,7 @@ const SidebarItems = () => {
 		<>
 			<Home />
 			<Search />
-			<Messages />
+			{/* <Messages /> */}
 			<Notifications authUser={authUser} />
 			<CreatePost />
 			<ProfileLink />

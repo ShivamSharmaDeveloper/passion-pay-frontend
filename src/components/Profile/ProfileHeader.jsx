@@ -1,16 +1,19 @@
-import { Avatar, AvatarGroup, Button, Flex, Text, VStack, useDisclosure } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, Button, Flex, Text, VStack, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
 import useUserProfileStore from "../../store/userProfileStore";
 import useAuthStore from "../../store/authStore";
 import EditProfile from "./EditProfile";
 import useFollowUser from "../../hooks/useFollowUser";
 import FollowedUsersModal from "./FollowedUsersModal";
 import { useState } from "react";
+import { EditIcon, SettingsIcon } from "@chakra-ui/icons";
+import ProfileMenu from "../Sidebar/ProfileMenu";
 
 const ProfileHeader = () => {
 	const { userProfile } = useUserProfileStore();
 	const [showing, setShowing] = useState("following");  // 'followers' or 'following'
 	const authUser = useAuthStore((state) => state.user);
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const isTabletOrBelow = useBreakpointValue({ base: true, md: false });
 	// State to manage the modal for following users
 	const { isOpen: isFollowingModalOpen, onOpen: openFollowingModal, onClose: closeFollowingModal } = useDisclosure();
 
@@ -20,6 +23,21 @@ const ProfileHeader = () => {
 
 	return (
 		<Flex gap={{ base: 4, sm: 10 }} py={10} direction={{ base: "column", sm: "row" }}>
+			{visitingOwnProfileAndAuth && isTabletOrBelow &&
+				<ProfileMenu />
+			}
+			{/* <Button
+				bg={"white"}
+				leftIcon={<SettingsIcon />}
+				color={"black"}
+				_hover={{ bg: "whiteAlpha.800" }}
+				size={{ base: "xs", md: "sm" }}
+				position='absolute'
+				top={5}
+				right={3}
+			>
+				Settings
+			</Button> */}
 			<AvatarGroup size={{ base: "xl", md: "2xl" }} justifySelf={"center"} alignSelf={"flex-start"} mx={"auto"}>
 				<Avatar src={userProfile.profilePicURL} alt='As a programmer logo' />
 			</AvatarGroup>
@@ -37,6 +55,7 @@ const ProfileHeader = () => {
 						<Flex gap={4} alignItems={"center"} justifyContent={"center"}>
 							<Button
 								bg={"white"}
+								leftIcon={<EditIcon />}
 								color={"black"}
 								_hover={{ bg: "whiteAlpha.800" }}
 								size={{ base: "xs", md: "sm" }}
@@ -69,7 +88,7 @@ const ProfileHeader = () => {
 						</Text>
 						Posts
 					</Text>
-					<Text fontSize={{ base: "xs", md: "sm" }} onClick={() => { setShowing("followers"); openFollowingModal();}} cursor={'pointer'}>
+					<Text fontSize={{ base: "xs", md: "sm" }} onClick={() => { setShowing("followers"); openFollowingModal(); }} cursor={'pointer'}>
 						<Text as='span' fontWeight={"bold"} mr={1}>
 							{userProfile.followers.length}
 						</Text>

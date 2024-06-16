@@ -14,7 +14,7 @@ const Messages = () => {
             placement='right'
             ml={1}
             openDelay={500}
-            display={{ base: "none", md: "none" }}
+            display={{ base: "block", md: "none" }}
         >
             <Flex
                 alignItems={"center"}
@@ -25,7 +25,6 @@ const Messages = () => {
                 w={{ base: 10, md: "full" }}
                 justifyContent={{ base: "center", md: "flex-start" }}
                 onClick={handleClick}
-                display={"none"}
             >
                 <MessagesLogo />
                 <Box display={{ base: "none", md: "block" }}>Messages</Box>
