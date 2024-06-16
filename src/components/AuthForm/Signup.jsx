@@ -3,7 +3,7 @@ import { Alert, AlertIcon, Button, Input, InputGroup, InputRightElement } from "
 import { useState } from "react";
 import useSignUpWithEmailAndPassword from "../../hooks/useSignUpWithEmailAndPassword";
 
-const Signup = () => {
+const Signup = ({ isPrivacyAccepted, isTermsAccepted }) => {
 	const [inputs, setInputs] = useState({
 		fullName: "",
 		username: "",
@@ -79,7 +79,7 @@ const Signup = () => {
 				size={"sm"}
 				fontSize={14}
 				isLoading={loading}
-				onClick={() => signup(inputs)}
+				onClick={() => signup(inputs, isPrivacyAccepted, isTermsAccepted)}
 			>
 				Sign Up
 			</Button>

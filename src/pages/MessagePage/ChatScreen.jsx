@@ -103,7 +103,7 @@ const ChatApp = () => {
     return (
         <div>
             <ChatScreen messages={messages} onStartConversation={handleStartConversation} />
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} closeOnOverlayClick={false}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Start a conversation</ModalHeader>

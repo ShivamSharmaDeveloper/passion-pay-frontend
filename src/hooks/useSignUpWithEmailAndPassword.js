@@ -9,9 +9,13 @@ const useSignUpWithEmailAndPassword = () => {
 	const showToast = useShowToast();
 	const loginUser = useAuthStore((state) => state.login);
 
-	const signup = async (inputs) => {
+	const signup = async (inputs, isPrivacyAccepted, isTermsAccepted) => {
 		if (!inputs.email || !inputs.password || !inputs.username || !inputs.fullName) {
 			showToast("Error", "Please fill all the fields", "error");
+			return;
+		}
+		if (!isPrivacyAccepted || !isTermsAccepted) {
+			showToast("", "Please Accept Privacy & Policy and Terms & Conditions both!", "error");
 			return;
 		}
 

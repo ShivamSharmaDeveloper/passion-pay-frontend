@@ -35,7 +35,7 @@ const App = () => {
 				<Route path='/auth' element={!authUser || !isValidAuth ? <AuthPage /> : <Navigate to='/' />} /> */}
 				<Route path='/' element={authUser ? <HomePage /> : <Navigate to='/auth' />} />
 				<Route path='/auth' element={!authUser ? <AuthPage /> : <Navigate to='/' />} />
-				<Route path='/:username' element={<ProfilePage />} />
+				<Route path='/:username' element={authUser ? <ProfilePage /> : <Navigate to='/auth' />} />
 				<Route path='/notification' element={authUser ? <NotificationPage /> : <Navigate to='/auth' />} />
 				<Route path="/direct" element={authUser ? <MessagesPage /> : <Navigate to='/auth' />} />
 			</Routes>

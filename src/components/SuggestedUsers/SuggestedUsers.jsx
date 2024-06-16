@@ -36,12 +36,12 @@ const SuggestedUsers = () => {
 				</Link>
 			</Box>
 			{/* Modal for showing all suggested users */}
-			<Modal isOpen={isOpen} onClose={onClose}>
+			<Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
 				<ModalOverlay />
 				<ModalContent>
 					<ModalHeader>Suggested Users</ModalHeader>
 					<ModalCloseButton />
-					<ModalBody maxH={'350px'} overflow={'auto'} >
+					<ModalBody maxH={'350px'} overflow={'auto'} sx={{scrollbarWidth: 'none'}} >
 						{suggestedUsers.map((user) => (
 							<Box key={user.id} mb={4}>
 								<SuggestedUser user={user} />

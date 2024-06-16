@@ -45,7 +45,7 @@ const EditProfile = ({ isOpen, onClose }) => {
 
 	return (
 		<>
-			<Modal isOpen={isOpen} onClose={onClose}>
+			<Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
 				<ModalOverlay />
 				<ModalContent bg={"black"} boxShadow={"xl"} border={"1px solid gray"} mx={3}>
 					<ModalHeader />

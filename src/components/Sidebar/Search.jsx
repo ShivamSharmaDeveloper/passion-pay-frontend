@@ -54,7 +54,7 @@ const Search = () => {
 				</Flex>
 			</Tooltip>
 
-			<Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInLeft'>
+			<Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInLeft' closeOnOverlayClick={false}>
 				<ModalOverlay />
 				<ModalContent bg={"black"} border={"1px solid gray"} maxW={"400px"}>
 					<ModalHeader>Search user</ModalHeader>

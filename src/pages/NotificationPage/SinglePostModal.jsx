@@ -40,7 +40,7 @@ const SinglePostModal = ({ authUser, posts, notification, isOpen, onClose }) => 
         }
     };
     return (
-        <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: "3xl", md: "5xl" }}>
+        <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: "3xl", md: "5xl" }} closeOnOverlayClick={false}>
             <ModalOverlay />
             <ModalContent>
                 <ModalCloseButton />

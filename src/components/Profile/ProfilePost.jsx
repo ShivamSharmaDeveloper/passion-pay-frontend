@@ -117,7 +117,7 @@ const ProfilePost = ({ post }) => {
 					<Image src={post.imageURL} alt='profile post' w={"100%"} h={"100%"} objectFit={"cover"} />}
 			</GridItem>
 
-			<Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: "3xl", md: "5xl" }}>
+			<Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: "3xl", md: "5xl" }} closeOnOverlayClick={false}>
 				<ModalOverlay />
 				<ModalContent>
 					<ModalCloseButton filter={'invert(0)'} />
