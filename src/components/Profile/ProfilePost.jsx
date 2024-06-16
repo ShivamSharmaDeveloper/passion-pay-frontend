@@ -120,7 +120,7 @@ const ProfilePost = ({ post }) => {
 			<Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: "3xl", md: "5xl" }}>
 				<ModalOverlay />
 				<ModalContent>
-					<ModalCloseButton filter={'invert(1)'}/>
+					<ModalCloseButton filter={'invert(0)'} />
 					<ModalBody bg={"black"} pb={5}>
 						<Flex
 							gap='4'
@@ -140,6 +140,7 @@ const ProfilePost = ({ post }) => {
 								alignItems={"center"}
 								maxW={"80vw"}
 								minW={"30vw"}
+								maxH={{ base: '50vh', md: "full" }}
 							>
 								{post.type === 'video' ?
 									<VideoPlayer video={post.imageURL} maxH={'70vh'} /> : (
@@ -180,7 +181,7 @@ const ProfilePost = ({ post }) => {
 									// <Image src={post.imageURL} alt='profile post' maxH={'70vh'} />
 								}
 							</Flex>
-							<Flex flex={1} flexDir={"column"} px={10} display={{ base: "flex", md: "flex" }}>
+							<Flex flex={1} flexDir={"column"} px={{ md: 10, base: 4 }} display={{ base: "flex", md: "flex" }}>
 								<Flex alignItems={"center"} justifyContent={"space-between"}>
 									<Flex alignItems={"center"} gap={4}>
 										<Avatar src={userProfile.profilePicURL} size={"sm"} />
@@ -210,7 +211,8 @@ const ProfilePost = ({ post }) => {
 								<VStack
 									alignItems={"flex-start"}
 									overflowY={"auto"}
-									maxH={"45vh"}
+									maxH={{ md: "45vh", base: '25vh' }}
+									sx={{ scrollbarWidth: 'none' }}
 									spacing={3}
 								>
 									{post.comments.map((comment) => (

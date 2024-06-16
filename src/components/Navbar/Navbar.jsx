@@ -1,11 +1,11 @@
-import { Button, Container, Flex, Image } from "@chakra-ui/react";
+import { Button, Container, Flex, Image, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
 	return (
 		<Container maxW={"container.lg"} my={4}>
-			<Flex w={"full"} justifyContent={{ base: "center", sm: "space-between" }} alignItems={"center"}>
-				<Image src='/logo.png' h={20} display={{ base: "none", sm: "block" }} cursor={"pointer"} />
+			<Flex w={"full"} justifyContent={"space-between"} alignItems={"center"}>
+				<Text fontSize={'40px'} fontFamily={'"Satisfy", cursive'}>PassionPay</Text>
 				<Flex gap={4}>
 					<Link to='/auth'>
 						<Button colorScheme={"blue"} size={"sm"}>

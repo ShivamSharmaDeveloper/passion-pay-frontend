@@ -10,16 +10,31 @@ const Sidebar = () => {
 	const { handleLogout, isLoggingOut } = useLogout();
 	return (
 		<Box
-			height={"100vh"}
-			borderRight={"1px solid"}
-			borderColor={"whiteAlpha.300"}
-			py={8}
-			position={"sticky"}
-			top={0}
-			left={0}
+			// height={"100vh"}
+			// borderRight={"1px solid"}
+			// borderColor={"whiteAlpha.300"}
+			// py={8}
+			// position={"sticky"}
+			// top={0}
+			// left={0}
+			// px={{ base: 2, md: 4 }}
+			display="flex"
+			flexDir={{ base: "row", md: "column" }}
+			alignItems="center"
+			justifyContent={{ base: "space-around", md: "flex-start" }}
+			gap={{ base: 4, md: 10 }}
+			position={{ base: "sticky", md: "fixed" }}
+			width={{md: '221px', base: 'full'}}
+			// w="full"
+			h={{ base: "100%", md: "full" }}
+			py={{ base: 2, md: 8 }}
 			px={{ base: 2, md: 4 }}
+			bg="gray.800"
+			borderTop={{ base: "1px solid", md: "none" }}
+			borderRight={{ base: "none", md: "1px solid" }}
+			borderColor="whiteAlpha.300"
 		>
-			<Flex direction={"column"} gap={10} w='full' height={"full"}>
+			{/* <Flex direction={"column"} gap={10} w='full' height={"full"}> */}
 				<Link to={"/"} as={RouterLink} pl={2} display={{ base: "none", md: "block" }} cursor='pointer' textDecoration={'none !important'} textAlign={'center'}>
 					{/* <InstagramLogo /> */}
 					<Text fontSize={'40px'} fontFamily={'"Satisfy", cursive'}>PassionPay</Text>
@@ -29,7 +44,7 @@ const Sidebar = () => {
 					to={"/"}
 					as={RouterLink}
 					p={2}
-					display={{ base: "block", md: "none" }}
+					display={{ base: "none", md: "none" }}
 					borderRadius={6}
 					_hover={{
 						bg: "whiteAlpha.200",
@@ -39,7 +54,8 @@ const Sidebar = () => {
 				>
 					<InstagramMobileLogo />
 				</Link>
-				<Flex direction={"column"} gap={5} cursor={"pointer"}>
+				{/* <Flex direction={"column"} gap={5} cursor={"pointer"}> */}
+			<Flex direction={{base: "row", md: "column"}} gap={{md: 5, base: 3}} cursor={"pointer"} w="full	">
 					<SidebarItems />
 				</Flex>
 
@@ -60,7 +76,8 @@ const Sidebar = () => {
 						borderRadius={6}
 						p={2}
 						w={{ base: 10, md: "full" }}
-						mt={"auto"}
+						mt={{md: "auto", base: 'none'}}
+						display={{base: 'block', md: "flex"}}
 						justifyContent={{ base: "center", md: "flex-start" }}
 					>
 						<BiLogOut size={25} />
@@ -74,7 +91,7 @@ const Sidebar = () => {
 						</Button>
 					</Flex>
 				</Tooltip>
-			</Flex>
+			{/* </Flex> */}
 		</Box>
 	);
 };

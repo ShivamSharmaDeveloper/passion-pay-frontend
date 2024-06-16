@@ -25,6 +25,7 @@ const Messages = () => {
                 w={{ base: 10, md: "full" }}
                 justifyContent={{ base: "center", md: "flex-start" }}
                 onClick={handleClick}
+                display={"none"}
             >
                 <MessagesLogo />
                 <Box display={{ base: "none", md: "block" }}>Messages</Box>

@@ -30,7 +30,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 			<ChakraProvider theme={theme}>
 				<ColorModeScript initialColorMode={theme.config.initialColorMode} />
 				<App />
-				
 			</ChakraProvider>
 		</BrowserRouter>
 	</React.StrictMode>

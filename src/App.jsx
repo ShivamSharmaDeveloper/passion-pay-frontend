@@ -36,8 +36,8 @@ const App = () => {
 				<Route path='/' element={authUser ? <HomePage /> : <Navigate to='/auth' />} />
 				<Route path='/auth' element={!authUser ? <AuthPage /> : <Navigate to='/' />} />
 				<Route path='/:username' element={<ProfilePage />} />
-				<Route path='/notification' element={<NotificationPage />} />
-				<Route path="/direct" element={<MessagesPage />} />
+				<Route path='/notification' element={authUser ? <NotificationPage /> : <Navigate to='/auth' />} />
+				<Route path="/direct" element={authUser ? <MessagesPage /> : <Navigate to='/auth' />} />
 			</Routes>
 		</PageLayout>
 	);

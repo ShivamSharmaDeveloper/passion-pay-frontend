@@ -9,7 +9,7 @@ const Home = () => {
 			label={"Home"}
 			placement='right'
 			ml={1}
-			openDelay={500}
+			openDelay={300}
 			display={{ base: "block", md: "none" }}
 		>
 			<Link
