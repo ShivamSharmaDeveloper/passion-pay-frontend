@@ -15,7 +15,7 @@ const GoogleAuth = ({ prefix }) => {
 			const newUser = await signInWithGoogle();
 			if (!newUser && error) {
 				console.log(error.code)
-				showToast("Error", error.code === 'auth/popup-closed-by-user' ? 'Please try again' : error.message, "error");
+				showToast("Error", error.code === 'auth/popup-closed-by-user' || error.code === 'auth/unauthorized-domain' ? 'Please try again' : error.message, "error");
 				return;
 			}
 			const userRef = doc(firestore, "users", newUser.user.uid);

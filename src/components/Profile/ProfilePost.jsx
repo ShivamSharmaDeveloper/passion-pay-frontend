@@ -129,6 +129,7 @@ const ProfilePost = ({ post }) => {
 							maxH={"120vh"}
 							minH={"50vh"}
 							flexWrap={'wrap'}
+							flexDir={{ base: "column", md: "row" }}
 						>
 							<Flex
 								borderRadius={4}

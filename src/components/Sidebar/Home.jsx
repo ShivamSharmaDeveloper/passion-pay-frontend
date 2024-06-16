@@ -10,7 +10,7 @@ const Home = () => {
 			placement='right'
 			ml={1}
 			openDelay={300}
-			display={{ base: "block", md: "none" }}
+			display={{ base: "none", md: "none" }}
 		>
 			<Link
 				display={"flex"}

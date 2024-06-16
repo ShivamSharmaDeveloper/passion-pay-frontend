@@ -56,7 +56,7 @@ const CreatePost = () => {
 				placement='right'
 				ml={1}
 				openDelay={500}
-				display={{ base: "block", md: "none" }}
+				display={{ base: "none", md: "none" }}
 			>
 				<Flex
 					alignItems={"center"}
