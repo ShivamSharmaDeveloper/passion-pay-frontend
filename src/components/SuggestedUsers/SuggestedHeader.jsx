@@ -3,7 +3,7 @@ import useLogout from "../../hooks/useLogout";
 import useAuthStore from "../../store/authStore";
 import { Link } from "react-router-dom";
 
-const SuggestedHeader = () => {
+const SuggestedHeader = ({ colorMode }) => {
 	const { handleLogout, isLoggingOut } = useLogout();
 	const authUser = useAuthStore((state) => state.user);
 
@@ -27,7 +27,7 @@ const SuggestedHeader = () => {
 				_hover={{ background: "transparent" }}
 				fontSize={14}
 				fontWeight={"medium"}
-				color={"blue.400"}
+				color={colorMode === 'dark' ? "blue.400" : "blue.600"}
 				onClick={handleLogout}
 				isLoading={isLoggingOut}
 				cursor={"pointer"}

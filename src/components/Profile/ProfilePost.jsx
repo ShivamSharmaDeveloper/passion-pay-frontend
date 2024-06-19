@@ -120,7 +120,7 @@ const ProfilePost = ({ post, isDarkMode }) => {
 			<Modal isOpen={isOpen} onClose={onClose} isCentered={true} size={{ base: "3xl", md: "5xl" }} closeOnOverlayClick={false}>
 				<ModalOverlay />
 				<ModalContent>
-					<ModalCloseButton filter={'invert(0)'} />
+					<ModalCloseButton />
 					<ModalBody bg={isDarkMode ? "black" : "white"} pb={5}>
 						<Flex
 							gap='4'
@@ -194,7 +194,6 @@ const ProfilePost = ({ post, isDarkMode }) => {
 									{authUser?.uid === userProfile.uid && (
 										<Button
 											size={"sm"}
-											colorScheme="red"
 											onClick={deleteModal.onOpen}  // Open DeletePostModal
 											bg={"transparent"}
 											_hover={{ bg: "whiteAlpha.300", color: "red.600" }}
@@ -202,7 +201,7 @@ const ProfilePost = ({ post, isDarkMode }) => {
 											p={1}
 											isLoading={isDeleting}
 										>
-											<MdDelete size={20} cursor='pointer' filter={isDarkMode ? "unset" : "invert(1)"} />
+											<MdDelete size={20} cursor='pointer' />
 										</Button>
 									)}
 								</Flex>

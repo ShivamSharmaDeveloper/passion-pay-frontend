@@ -12,7 +12,7 @@ const SuggestedUsers = ({ colorMode }) => {
 
 	return (
 		<VStack py={8} px={6} gap={4}>
-			<SuggestedHeader />
+			<SuggestedHeader colorMode={colorMode} />
 
 			{suggestedUsers.length !== 0 && (
 				<Flex alignItems={"center"} justifyContent={"space-between"} w={"full"}>
