@@ -2,7 +2,7 @@ import { Box, Flex, Grid, Skeleton, Text, VStack } from "@chakra-ui/react";
 import ProfilePost from "./ProfilePost";
 import useGetUserPosts from "../../hooks/useGetUserPosts";
 
-const ProfilePosts = () => {
+const ProfilePosts = ({ isDarkMode }) => {
 	const { isLoading, posts } = useGetUserPosts();
 
 	const noPostsFound = !isLoading && posts.length === 0;
@@ -29,7 +29,7 @@ const ProfilePosts = () => {
 			{!isLoading && (
 				<>
 					{posts.map((post) => (
-						<ProfilePost post={post} key={post.id} />
+						<ProfilePost post={post} key={post.id} isDarkMode={isDarkMode} />
 					))}
 				</>
 			)}

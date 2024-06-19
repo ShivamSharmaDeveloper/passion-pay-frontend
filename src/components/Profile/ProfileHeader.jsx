@@ -8,7 +8,7 @@ import { useState } from "react";
 import { EditIcon, SettingsIcon } from "@chakra-ui/icons";
 import ProfileMenu from "../Sidebar/ProfileMenu";
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ isDarkMode }) => {
 	const { userProfile } = useUserProfileStore();
 	const [showing, setShowing] = useState("following");  // 'followers' or 'following'
 	const authUser = useAuthStore((state) => state.user);
@@ -26,18 +26,6 @@ const ProfileHeader = () => {
 			{visitingOwnProfileAndAuth && isTabletOrBelow &&
 				<ProfileMenu />
 			}
-			{/* <Button
-				bg={"white"}
-				leftIcon={<SettingsIcon />}
-				color={"black"}
-				_hover={{ bg: "whiteAlpha.800" }}
-				size={{ base: "xs", md: "sm" }}
-				position='absolute'
-				top={5}
-				right={3}
-			>
-				Settings
-			</Button> */}
 			<AvatarGroup size={{ base: "xl", md: "2xl" }} justifySelf={"center"} alignSelf={"flex-start"} mx={"auto"}>
 				<Avatar src={userProfile.profilePicURL} alt='As a programmer logo' />
 			</AvatarGroup>
@@ -54,10 +42,10 @@ const ProfileHeader = () => {
 					{visitingOwnProfileAndAuth && (
 						<Flex gap={4} alignItems={"center"} justifyContent={"center"}>
 							<Button
-								bg={"white"}
+								bg={isDarkMode ? "white" : "blue.500"}
 								leftIcon={<EditIcon />}
-								color={"black"}
-								_hover={{ bg: "whiteAlpha.800" }}
+								color={isDarkMode ? "black" : "white"}
+								_hover={{ bg: isDarkMode ? "whiteAlpha.800" : "blue.600" }}
 								size={{ base: "xs", md: "sm" }}
 								onClick={onOpen}
 							>
@@ -108,8 +96,8 @@ const ProfileHeader = () => {
 				</Flex>
 				<Text fontSize={"sm"}>{userProfile.bio}</Text>
 			</VStack>
-			{isOpen && <EditProfile isOpen={isOpen} onClose={onClose} />}
-			{isFollowingModalOpen && <FollowedUsersModal isOpen={isFollowingModalOpen} onClose={closeFollowingModal} showing={showing} userProfile={userProfile} visitingAnotherProfileAndAuth={visitingAnotherProfileAndAuth} />}
+			{isOpen && <EditProfile isOpen={isOpen} onClose={onClose}isDarkMode={isDarkMode} />}
+			{isFollowingModalOpen && <FollowedUsersModal isOpen={isFollowingModalOpen} onClose={closeFollowingModal} showing={showing} userProfile={userProfile} visitingAnotherProfileAndAuth={visitingAnotherProfileAndAuth} isDarkMode={isDarkMode} />}
 		</Flex>
 	);
 };

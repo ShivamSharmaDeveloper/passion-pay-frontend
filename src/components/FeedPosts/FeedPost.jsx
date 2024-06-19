@@ -1,22 +1,23 @@
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Flex, Image, useBreakpointValue } from "@chakra-ui/react";
 import PostFooter from "./PostFooter";
 import PostHeader from "./PostHeader";
 import useGetUserProfileById from "../../hooks/useGetUserProfileById";
 import VideoPlayer from "./VideoPlayer";
 
-const FeedPost = ({ post }) => {
+const FeedPost = ({ post, colorMode }) => {
 	const { userProfile } = useGetUserProfileById(post.createdBy);
+	const isTabletOrBelow = useBreakpointValue({ base: true, md: false });
 
 	return (
 		<>
-			<PostHeader post={post} creatorProfile={userProfile} />
+			<PostHeader post={post} creatorProfile={userProfile} colorMode={colorMode} />
 			<Box my={2} borderRadius={4} overflow={"hidden"} display={'flex'} justifyContent={'center'} alignItems={'center'}>
 				{post.type === 'video' ?
-					<VideoPlayer video={post.imageURL} maxH={'500px'} />
+					<VideoPlayer video={post.imageURL} maxH={isTabletOrBelow ? '330px' : '400px'} />
 					: (<Box
 						position="relative"
 						width="100%"
-						height="500px"
+						height={isTabletOrBelow ? '330px' : '400px'}
 						maxWidth="600px"
 						display="flex"
 						justifyContent="center"
@@ -41,7 +42,7 @@ const FeedPost = ({ post }) => {
 							alt="FEED POST IMG"
 							position="relative"
 							zIndex={1}
-							maxHeight="500px"
+							maxHeight={isTabletOrBelow ? '330px' : '400px'}
 							maxWidth="100%"
 							objectFit="contain"
 						/>

@@ -3,7 +3,7 @@ import useFollowUser from "../../hooks/useFollowUser";
 import useAuthStore from "../../store/authStore";
 import { Link } from "react-router-dom";
 
-const SuggestedUser = ({ user, setUser }) => {
+const SuggestedUser = ({ user, setUser, handleProfileClick, colorMode }) => {
 	const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(user?.uid);
 	const authUser = useAuthStore((state) => state.user);
 
@@ -22,7 +22,7 @@ const SuggestedUser = ({ user, setUser }) => {
 	return (
 		<Flex justifyContent={"space-between"} alignItems={"center"} w={"full"}>
 			<Flex alignItems={"center"} gap={2}>
-				<Link to={`/${user?.username}`}>
+				<Link to={`/${user?.username}`} onClick={handleProfileClick}>
 					<Avatar src={user?.profilePicURL} size={"md"} />
 				</Link>
 				<VStack spacing={2} alignItems={"flex-start"}>
@@ -43,9 +43,9 @@ const SuggestedUser = ({ user, setUser }) => {
 					p={0}
 					h={"max-content"}
 					fontWeight={"medium"}
-					color={"blue.400"}
+					color={colorMode === 'dark' ? "blue.400" : "blue.600"}
 					cursor={"pointer"}
-					_hover={{ color: "white" }}
+					_hover={{ color: colorMode === 'dark' ? "white" : "blue.500" }}
 					onClick={onFollowUser}
 					isLoading={isUpdating}
 				>

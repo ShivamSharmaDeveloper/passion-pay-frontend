@@ -5,18 +5,20 @@ import ProfilePosts from "../../components/Profile/ProfilePosts";
 import useGetUserProfileByUsername from "../../hooks/useGetUserProfileByUsername";
 import { useParams } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
+import useUserProfileStore from "../../store/userProfileStore";
 
 const ProfilePage = () => {
 	const { username } = useParams();
 	const { isLoading, userProfile } = useGetUserProfileByUsername(username);
-
+	const colorMode = useUserProfileStore((state) => state.colorMode);
+	let isDarkMode = colorMode === 'dark';
 	const userNotFound = !isLoading && !userProfile;
 	if (userNotFound) return <UserNotFound />;
 
 	return (
 		<Container maxW='container.lg' py={5}>
 			<Flex py={10} px={4} pl={{ base: 4, md: 10 }} w={"full"} mx={"auto"} flexDirection={"column"}>
-				{!isLoading && userProfile && <ProfileHeader />}
+				{!isLoading && userProfile && <ProfileHeader isDarkMode={isDarkMode} />}
 				{isLoading && <ProfileHeaderSkeleton />}
 			</Flex>
 			<Flex
@@ -24,11 +26,11 @@ const ProfilePage = () => {
 				maxW={"full"}
 				mx={"auto"}
 				borderTop={"1px solid"}
-				borderColor={"whiteAlpha.300"}
+				borderColor={isDarkMode ? "whiteAlpha.300" : "inherit"}
 				direction={"column"}
 			>
-				<ProfileTabs />
-				<ProfilePosts />
+				<ProfileTabs isDarkMode={isDarkMode} />
+				<ProfilePosts isDarkMode={isDarkMode}  />
 			</Flex>
 		</Container>
 	);

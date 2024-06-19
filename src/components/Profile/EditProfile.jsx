@@ -21,7 +21,7 @@ import usePreviewImg from "../../hooks/usePreviewImg";
 import useEditProfile from "../../hooks/useEditProfile";
 import useShowToast from "../../hooks/useShowToast";
 
-const EditProfile = ({ isOpen, onClose }) => {
+const EditProfile = ({ isOpen, onClose, isDarkMode }) => {
 	const [inputs, setInputs] = useState({
 		fullName: "",
 		username: "",
@@ -47,13 +47,13 @@ const EditProfile = ({ isOpen, onClose }) => {
 		<>
 			<Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
 				<ModalOverlay />
-				<ModalContent bg={"black"} boxShadow={"xl"} border={"1px solid gray"} mx={3}>
+				<ModalContent bg={isDarkMode ? "black" : "white"} boxShadow={"xl"} border={"1px solid gray"} mx={3}>
 					<ModalHeader />
 					<ModalCloseButton />
 					<ModalBody>
 						{/* Container Flex */}
-						<Flex bg={"black"}>
-							<Stack spacing={4} w={"full"} maxW={"md"} bg={"black"} p={6} my={0}>
+						<Flex bg={isDarkMode ? "black" : "white"}>
+							<Stack spacing={4} w={"full"} maxW={"md"} bg={isDarkMode ? "black" : "white"} p={6} my={0}>
 								<Heading lineHeight={1.1} fontSize={{ base: "2xl", sm: "3xl" }}>
 									Edit Profile
 								</Heading>
@@ -71,7 +71,7 @@ const EditProfile = ({ isOpen, onClose }) => {
 												Edit Profile Picture
 											</Button>
 										</Center>
-										<Input type='file' hidden ref={fileRef} onChange={handleImageChange} />
+										<Input type='file' hidden ref={fileRef} onChange={(e) => handleImageChange(e, true)} />
 									</Stack>
 								</FormControl>
 

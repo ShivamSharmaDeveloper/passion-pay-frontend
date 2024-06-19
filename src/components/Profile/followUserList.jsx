@@ -2,7 +2,7 @@ import { Avatar, Button, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
 import useFollowUser from '../../hooks/useFollowUser';
 
-const FollowUserList = ({ user, authUser, visitingAnotherProfileAndAuth }) => {
+const FollowUserList = ({ user, authUser, visitingAnotherProfileAndAuth, isDarkMode }) => {
     const { isFollowing, isUpdating, handleFollowUser } = useFollowUser(user?.uid);
 
   return (
@@ -19,7 +19,7 @@ const FollowUserList = ({ user, authUser, visitingAnotherProfileAndAuth }) => {
               fontWeight={"medium"}
               color={"blue.400"}
               cursor={"pointer"}
-              _hover={{ color: "white" }}
+              _hover={{ color: isDarkMode ? "white" : "blue.500" }}
               onClick={handleFollowUser}
               isLoading={isUpdating}
           >

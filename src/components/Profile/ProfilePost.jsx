@@ -32,7 +32,7 @@ import Caption from "../Comment/Caption";
 import VideoPlayer from "../FeedPosts/VideoPlayer";
 import DeletePostModal from "./DeletePostModal";  // Import the modal
 
-const ProfilePost = ({ post }) => {
+const ProfilePost = ({ post, isDarkMode }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const deleteModal = useDisclosure(); // Hook for DeletePostModal
 	const userProfile = useUserProfileStore((state) => state.userProfile);
@@ -98,15 +98,15 @@ const ProfilePost = ({ post }) => {
 				>
 					<Flex alignItems={"center"} justifyContent={"center"} gap={50}>
 						<Flex>
-							<AiFillHeart size={20} />
-							<Text fontWeight={"bold"} ml={2}>
+							<AiFillHeart size={20} filter={isDarkMode ? "unset" : "invert(1)"} />
+							<Text fontWeight={"bold"} ml={2} color={"white"}>
 								{post.likes.length}
 							</Text>
 						</Flex>
 
 						<Flex>
-							<FaComment size={20} />
-							<Text fontWeight={"bold"} ml={2}>
+							<FaComment size={20} filter={isDarkMode ? "unset" : "invert(1)"} />
+							<Text fontWeight={"bold"} ml={2} color={"white"}>
 								{post.comments.length}
 							</Text>
 						</Flex>
@@ -121,7 +121,7 @@ const ProfilePost = ({ post }) => {
 				<ModalOverlay />
 				<ModalContent>
 					<ModalCloseButton filter={'invert(0)'} />
-					<ModalBody bg={"black"} pb={5}>
+					<ModalBody bg={isDarkMode ? "black" : "white"} pb={5}>
 						<Flex
 							gap='4'
 							w={{ base: "90%", sm: "70%", md: "full" }}
@@ -202,12 +202,12 @@ const ProfilePost = ({ post }) => {
 											p={1}
 											isLoading={isDeleting}
 										>
-											<MdDelete size={20} cursor='pointer' />
+											<MdDelete size={20} cursor='pointer' filter={isDarkMode ? "unset" : "invert(1)"} />
 										</Button>
 									)}
 								</Flex>
 								{post.caption && <Caption post={post} />}
-								<Divider my={4} bg={"gray.500"} />
+								<Divider my={4} bg={isDarkMode ? "gray.500" : "black"} />
 
 								<VStack
 									alignItems={"flex-start"}
@@ -223,7 +223,7 @@ const ProfilePost = ({ post }) => {
 										/>
 									))}
 								</VStack>
-								{post.comments.length !== 0 && <Divider my={4} bg={"gray.8000"} />}
+								{post.comments.length !== 0 && <Divider my={4} bg={isDarkMode ? "gray.8000" : "black"} />}
 
 								<PostFooter isProfilePage={true} post={post} />
 							</Flex>

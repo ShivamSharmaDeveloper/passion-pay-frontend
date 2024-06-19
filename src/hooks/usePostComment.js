@@ -11,7 +11,7 @@ const usePostComment = () => {
 	const authUser = useAuthStore((state) => state.user);
 	const addComment = usePostStore((state) => state.addComment);
 
-	const handlePostComment = async (post, comment) => {
+	const handlePostComment = async (post, comment, setCommentOpen) => {
 		if (isCommenting) return;
 		if (!authUser) return showToast("Error", "You must be logged in to comment", "error");
 		setIsCommenting(true);
@@ -36,6 +36,7 @@ const usePostComment = () => {
 				read: false,
 				createdAt: Date.now()
 			});
+			setCommentOpen && setCommentOpen(false);
 		} catch (error) {
 			showToast("Error", error.message, "error");
 		} finally {

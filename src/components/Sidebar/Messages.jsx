@@ -2,7 +2,7 @@ import { Box, Flex, Tooltip } from "@chakra-ui/react";
 import { MessagesLogo } from "../../assets/constants";
 import { useNavigate } from "react-router-dom";
 
-const Messages = () => {
+const Messages = ({ colorMode }) => {
     const navigate = useNavigate();
     const handleClick = () => {
         // navigate('/direct');
@@ -19,14 +19,16 @@ const Messages = () => {
             <Flex
                 alignItems={"center"}
                 gap={4}
-                _hover={{ bg: "whiteAlpha.400" }}
+                _hover={{ bg: colorMode === 'dark' ? "whiteAlpha.400" : "#E2E8F0" }}
                 borderRadius={6}
                 p={2}
                 w={{ base: 10, md: "full" }}
                 justifyContent={{ base: "center", md: "flex-start" }}
                 onClick={handleClick}
             >
-                <MessagesLogo />
+                <Box sx={{ filter: colorMode === 'dark' ? 'invert(0) !important' : 'invert(1) !important' }}>
+                    <MessagesLogo />
+                </Box>
                 <Box display={{ base: "none", md: "block" }}>Messages</Box>
             </Flex>
         </Tooltip>

@@ -3,7 +3,7 @@ import FeedPost from "./FeedPost";
 import useGetFeedPosts from "../../hooks/useGetFeedPosts";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const FeedPosts = () => {
+const FeedPosts = ({ colorMode }) => {
 	const { isLoading, posts, fetchMorePosts, hasMore } = useGetFeedPosts();
 
 	return (
@@ -46,7 +46,7 @@ const FeedPosts = () => {
 					}
 				>
 					{posts?.map((post) => (
-						<FeedPost key={post.id} post={post} />
+						<FeedPost key={post.id} post={post} colorMode={colorMode} />
 					))}
 				</InfiniteScroll>
 			)}

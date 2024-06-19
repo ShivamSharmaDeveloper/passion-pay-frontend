@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import useNotificationStore, { fetchNotifications } from "../../store/notificationStore";
 import { useNavigate } from "react-router-dom";
 
-const Notifications = ({ authUser }) => {
+const Notifications = ({ authUser, colorMode }) => {
 	const navigate = useNavigate();
 	const { notifications, clearNotifications } = useNotificationStore();
 
@@ -29,14 +29,14 @@ const Notifications = ({ authUser }) => {
 			<Flex
 				alignItems={"center"}
 				gap={4}
-				_hover={{ bg: "whiteAlpha.400" }}
+				_hover={{ bg: colorMode === 'dark' ? "whiteAlpha.400" : "#E2E8F0" }}
 				borderRadius={6}
 				p={2}
 				w={{ base: 10, md: "full" }}
 				justifyContent={{ base: "center", md: "flex-start" }}
 				onClick={handleClick}
 			>
-				<Box position={"relative"}>
+				<Box position={"relative"} sx={{ filter: colorMode === 'dark' ? 'invert(0) !important' : 'invert(1) !important' }}>
 					{notifications && notifications.some(notification => !notification.read) && (
 						<Badge
 							variant='solid'
@@ -45,8 +45,9 @@ const Notifications = ({ authUser }) => {
 							position="absolute"
 							top="-1"
 							right="-2"
+							filter={'invert(1) !important'}
 						>
-							{notifications.filter(notification => !notification.read).length}
+							{notifications.filter(notification => !notification.read).length > 99 ? '99+' : notifications.filter(notification => !notification.read).length}
 						</Badge>
 					)}
 					<NotificationsLogo />

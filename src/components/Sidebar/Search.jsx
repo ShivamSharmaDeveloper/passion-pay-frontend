@@ -19,7 +19,7 @@ import useSearchUser from "../../hooks/useSearchUser";
 import { useRef } from "react";
 import SuggestedUser from "../SuggestedUsers/SuggestedUser";
 
-const Search = () => {
+const Search = ({ colorMode }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const searchRef = useRef(null);
 	const { user, isLoading, getUserProfile, setUser } = useSearchUser();
@@ -29,6 +29,12 @@ const Search = () => {
 		getUserProfile(searchRef.current.value);
 	};
 
+	const handleClose = () => {
+		searchRef.current = null;
+		setUser(null);
+		onClose();
+	}
+	
 	return (
 		<>
 			<Tooltip
@@ -42,7 +48,7 @@ const Search = () => {
 				<Flex
 					alignItems={"center"}
 					gap={4}
-					_hover={{ bg: "whiteAlpha.400" }}
+					_hover={{ bg: colorMode === 'dark' ? "whiteAlpha.400" : "#E2E8F0" }}
 					borderRadius={6}
 					p={2}
 					w={{ base: 10, md: "full" }}
@@ -54,16 +60,16 @@ const Search = () => {
 				</Flex>
 			</Tooltip>
 
-			<Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInLeft' closeOnOverlayClick={false}>
+			<Modal isOpen={isOpen} onClose={handleClose} motionPreset='slideInLeft' closeOnOverlayClick={false}>
 				<ModalOverlay />
-				<ModalContent bg={"black"} border={"1px solid gray"} maxW={"400px"}>
+				<ModalContent bg={colorMode === 'dark' ? "black" : "white"} border={"1px solid gray"} maxW={"400px"}>
 					<ModalHeader>Search user</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody pb={6}>
 						<form onSubmit={handleSearchUser}>
 							<FormControl>
 								<FormLabel>Username</FormLabel>
-								<Input placeholder='search here...' ref={searchRef} />
+								<Input placeholder='Search here...' ref={searchRef} />
 							</FormControl>
 
 							<Flex w={"full"} justifyContent={"flex-end"}>
@@ -72,7 +78,7 @@ const Search = () => {
 								</Button>
 							</Flex>
 						</form>
-						{user && <SuggestedUser user={user} setUser={setUser} />}
+						{user && <SuggestedUser user={user} setUser={setUser} handleProfileClick={handleClose} />}
 					</ModalBody>
 				</ModalContent>
 			</Modal>

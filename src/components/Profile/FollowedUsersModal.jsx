@@ -18,7 +18,7 @@ import fetchFollowedUsers from "../../hooks/usefetchFollowedUsers"; // Adjust pa
 import useFollowUser from "../../hooks/useFollowUser";
 import FollowUserList from "./followUserList";
 
-const FollowedUsersModal = ({ isOpen, onClose, showing, userProfile, visitingAnotherProfileAndAuth }) => {
+const FollowedUsersModal = ({ isOpen, onClose, showing, userProfile, visitingAnotherProfileAndAuth, isDarkMode }) => {
     const [followedUsers, setFollowedUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const authUser = useAuthStore((state) => state.user);
@@ -48,7 +48,7 @@ const FollowedUsersModal = ({ isOpen, onClose, showing, userProfile, visitingAno
     return (
         <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
             <ModalOverlay />
-            <ModalContent bg={"black"} border={"1px solid gray"} maxW={"400px"}>
+            <ModalContent bg={isDarkMode ? "black" : "white"} border={"1px solid gray"} maxW={"400px"}>
                 <ModalHeader>{showing === "following" ? 'Following' : 'Followers'}</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={6}>
@@ -60,7 +60,7 @@ const FollowedUsersModal = ({ isOpen, onClose, showing, userProfile, visitingAno
                         <Flex direction="column" gap={2} sx={{maxHeight: '380px', overflow: 'auto', scrollbarWidth: 'none'}}>
                             {followedUsers.length > 0 ? (
                                 followedUsers.map((user) => (
-                                    <FollowUserList user={user} authUser={authUser} key={user.id} visitingAnotherProfileAndAuth={visitingAnotherProfileAndAuth} />
+                                    <FollowUserList user={user} authUser={authUser} key={user.id} visitingAnotherProfileAndAuth={visitingAnotherProfileAndAuth} isDarkMode={isDarkMode} />
                                 ))
                             ) : (
                                 <Box>No followed users found.</Box>

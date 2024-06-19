@@ -30,7 +30,7 @@ import { addDoc, arrayUnion, collection, doc, updateDoc } from "firebase/firesto
 import { firestore, storage } from "../../firebase/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
-const CreatePost = () => {
+const CreatePost = ({ colorMode }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const [caption, setCaption] = useState("");
 	const imageRef = useRef(null);
@@ -48,6 +48,12 @@ const CreatePost = () => {
 			showToast("Error", error.message, "error");
 		}
 	};
+	const handleClose = () => {
+		onClose();
+		setCaption("");
+		setSelectedFile(null);
+	}
+	
 	return (
 		<>
 			<Tooltip
@@ -61,22 +67,24 @@ const CreatePost = () => {
 				<Flex
 					alignItems={"center"}
 					gap={4}
-					_hover={{ bg: "whiteAlpha.400" }}
+					_hover={{ bg: colorMode === 'dark' ? "whiteAlpha.400" : "#E2E8F0" }}
 					borderRadius={6}
 					p={2}
 					w={{ base: 10, md: "full" }}
 					justifyContent={{ base: "center", md: "flex-start" }}
 					onClick={onOpen}
 				>
-					<CreatePostLogo />
+					<Box sx={{ filter: colorMode === 'dark' ? 'invert(0) !important' : 'invert(1) !important' }}>
+						<CreatePostLogo />
+					</Box>
 					<Box display={{ base: "none", md: "block" }}>Create</Box>
 				</Flex>
 			</Tooltip>
 
-			<Modal isOpen={isOpen} onClose={onClose} size='xl' closeOnOverlayClick={false}>
+			<Modal isOpen={isOpen} onClose={handleClose} size='xl' closeOnOverlayClick={false}>
 				<ModalOverlay />
 
-				<ModalContent bg={"black"} border={"1px solid gray"}>
+				<ModalContent bg={colorMode === 'dark' ? "black" : "white"} border={"1px solid gray"}>
 					<ModalHeader>Create Post</ModalHeader>
 					<ModalCloseButton />
 					<ModalBody pb={6}>
@@ -92,7 +100,7 @@ const CreatePost = () => {
 									position={"absolute"}
 									top={2}
 									right={2}
-									filter={'invert(1'}
+									filter={'invert(1)'}
 									onClick={() => {
 										setSelectedFile(null);
 									}}
@@ -107,7 +115,7 @@ const CreatePost = () => {
 							maxLength={200}
 						/>
 						<Box display={'flex'} justifyContent={selectedFile ? 'flex-end' : 'space-between'} alignItems={selectedFile ? 'flex-end' : 'center'}>
-							<Input type='file' hidden ref={imageRef} onChange={handleImageChange} />
+							<Input type='file' hidden ref={imageRef} onChange={(e) => handleImageChange(e, false)} />
 
 							{!selectedFile &&
 								<BsFillImageFill

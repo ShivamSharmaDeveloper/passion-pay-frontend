@@ -4,7 +4,7 @@ import useFollowUser from "../../hooks/useFollowUser";
 import { timeAgo } from "../../utils/timeAgo";
 import useAuthStore from "../../store/authStore";
 
-const PostHeader = ({ post, creatorProfile }) => {
+const PostHeader = ({ post, creatorProfile, colorMode }) => {
 	const { handleFollowUser, isFollowing, isUpdating } = useFollowUser(post.createdBy);
 	const authUser = useAuthStore((state) => state.user);
 
@@ -37,7 +37,7 @@ const PostHeader = ({ post, creatorProfile }) => {
 					color={"blue.500"}
 					fontWeight={"bold"}
 					_hover={{
-						color: "white",
+						color: colorMode === 'dark' ? "white" : "blue.400",
 					}}
 					transition={"0.2s ease-in-out"}
 					onClick={handleFollowUser}

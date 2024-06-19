@@ -6,16 +6,16 @@ import Notifications from "./Notifications";
 import ProfileLink from "./ProfileLink";
 import Search from "./Search";
 
-const SidebarItems = () => {
+const SidebarItems = ({ colorMode }) => {
 	const authUser = useAuthStore((state) => state.user);
 	return (
 		<>
-			<Home />
-			<Search />
-			{/* <Messages /> */}
-			<Notifications authUser={authUser} />
-			<CreatePost />
-			<ProfileLink />
+			<Home colorMode={colorMode} />
+			<Search colorMode={colorMode} />
+			{/* <Messages colorMode={colorMode} /> */}
+			<Notifications authUser={authUser} colorMode={colorMode} />
+			<CreatePost colorMode={colorMode} />
+			<ProfileLink colorMode={colorMode} />
 		</>
 	);
 };

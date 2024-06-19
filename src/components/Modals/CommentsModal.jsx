@@ -13,7 +13,7 @@ import Comment from "../Comment/Comment";
 import usePostComment from "../../hooks/usePostComment";
 import { useEffect, useRef } from "react";
 
-const CommentsModal = ({ isOpen, onClose, post }) => {
+const CommentsModal = ({ isOpen, onClose, post, colorMode }) => {
 	const { handlePostComment, isCommenting } = usePostComment();
 	const commentRef = useRef(null);
 	const commentsContainerRef = useRef(null);
@@ -38,7 +38,7 @@ const CommentsModal = ({ isOpen, onClose, post }) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInLeft' closeOnOverlayClick={false}>
 			<ModalOverlay />
-			<ModalContent bg={"black"} border={"1px solid gray"} maxW={"400px"}>
+			<ModalContent bg={colorMode === 'dark' ? "black" : "white"} border={"1px solid gray"} maxW={"400px"}>
 				<ModalHeader>Comments</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody pb={6}>

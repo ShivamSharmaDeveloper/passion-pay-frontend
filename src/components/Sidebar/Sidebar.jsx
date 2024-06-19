@@ -7,10 +7,12 @@ import useLogout from "../../hooks/useLogout";
 import SidebarItems from "./SidebarItems";
 import ThemeToggleButton from "../../Layouts/PageLayout/ThemeToggleButton";
 import ProfileMenu from "./ProfileMenu";
+import useUserProfileStore from "../../store/userProfileStore";
 
 const Sidebar = () => {
 	const { handleLogout, isLoggingOut } = useLogout();
 	const isTabletOrBelow = useBreakpointValue({ base: true, md: false });
+	const colorMode = useUserProfileStore((state) => state.colorMode);
 	return (
 		<Box
 			// height={"100vh"}
@@ -30,9 +32,10 @@ const Sidebar = () => {
 			width={{ md: '221px', base: 'full' }}
 			// w="full"
 			h={{ base: "100%", md: "full" }}
+			boxShadow={colorMode === 'dark' ? 'none' : 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px'}
 			py={{ base: 2, md: 8 }}
 			px={{ base: 2, md: 4 }}
-			bg="gray.800"
+			bg={colorMode === 'dark' ? "gray.800" : isTabletOrBelow ? "blue.200" : "white.800"}
 			borderTop={{ base: "1px solid", md: "none" }}
 			borderRight={{ base: "none", md: "1px solid" }}
 			borderColor="whiteAlpha.300"
@@ -58,13 +61,13 @@ const Sidebar = () => {
 					<InstagramMobileLogo />
 				</Link> */}
 			{/* <Flex direction={"column"} gap={5} cursor={"pointer"}> */}
-			<Flex direction={{ base: "row", md: "column" }} justifyContent={'center'} gap={{ md: 5, base: 3 }} cursor={"pointer"} w="full">
-				<SidebarItems />
+			<Flex direction={{ base: "row", md: "column" }} justifyContent={'center'} pl={'5px'} gap={{ md: 5, base: 3 }} cursor={"pointer"} w="full">
+				<SidebarItems colorMode={colorMode} />
 			</Flex>
 			{/* {isTabletOrBelow && <ProfileMenu />} */}
 			{!isTabletOrBelow && (
-				<>
-					{/* <ThemeToggleButton /> */}
+				<Flex flexDir={'column'} mt={{ md: "auto", base: 'none' }} gap={4}>
+					<ThemeToggleButton />
 					{/* LOGOUT */}
 					<Tooltip
 						hasArrow
@@ -82,7 +85,6 @@ const Sidebar = () => {
 							borderRadius={6}
 							p={2}
 							w={{ base: 10, md: "full" }}
-							mt={{ md: "auto", base: 'none' }}
 							display={{ base: 'block', md: "flex" }}
 							justifyContent={{ base: "center", md: "flex-start" }}
 						>
@@ -97,7 +99,7 @@ const Sidebar = () => {
 							</Button>
 						</Flex>
 					</Tooltip>
-				</>)}
+				</Flex>)}
 			{/* </Flex> */}
 		</Box>
 	);

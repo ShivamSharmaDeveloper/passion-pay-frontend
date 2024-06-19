@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { BsBookmark, BsGrid3X3, BsSuitHeart } from "react-icons/bs";
 
-const ProfileTabs = () => {
+const ProfileTabs = ({ isDarkMode }) => {
 	return (
 		<Flex
 			w={"full"}
@@ -10,7 +10,7 @@ const ProfileTabs = () => {
 			textTransform={"uppercase"}
 			fontWeight={"bold"}
 		>
-			<Flex borderTop={"1px solid white"} alignItems={"center"} p='3' gap={1} cursor={"pointer"}>
+			<Flex borderTop={isDarkMode ? "1px solid white" : "1px solid black"} alignItems={"center"} p='3' gap={1} cursor={"pointer"}>
 				<Box fontSize={20}>
 					<BsGrid3X3 />
 				</Box>

@@ -3,7 +3,7 @@ import SuggestedHeader from "./SuggestedHeader";
 import SuggestedUser from "./SuggestedUser";
 import useGetSuggestedUsers from "../../hooks/useGetSuggestedUsers";
 
-const SuggestedUsers = () => {
+const SuggestedUsers = ({ colorMode }) => {
 	const { isLoading, suggestedUsers } = useGetSuggestedUsers();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -26,7 +26,7 @@ const SuggestedUsers = () => {
 			)}
 
 			{suggestedUsers.slice(0, 3).map((user) => (
-				<SuggestedUser user={user} key={user.id} />
+				<SuggestedUser user={user} key={user.id} colorMode={colorMode} />
 			))}
 
 			<Box fontSize={12} color={"gray.500"} mt={5} alignSelf={"start"}>
