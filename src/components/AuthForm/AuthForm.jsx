@@ -67,7 +67,7 @@ We may update this Privacy Policy from time to time. We will notify you of any c
 
 10. Contact Us
 
-If you have any questions about this Privacy Policy, please contact us at yashbusinessacount.co@gmail.com.
+If you have any questions about this Privacy Policy, please contact us at ourpassionpays@gmail.com.
   `;
 
 // Content for Terms and Conditions
@@ -100,7 +100,7 @@ We may update these terms and conditions from time to time. We will notify you o
 
 7. Contact Us
 
-If you have any questions about these terms, please contact us at yashbusinessacount.co@gmail.com.
+If you have any questions about these terms, please contact us at ourpassionpays@gmail.com.
   `;
 
 const AuthForm = () => {
