@@ -1,5 +1,5 @@
 import { Avatar, Box, Button, Divider, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Text, VStack, useDisclosure } from '@chakra-ui/react';
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { MdDelete } from 'react-icons/md';
 import Caption from '../../components/Comment/Caption';
 import Comment from '../../components/Comment/Comment';
@@ -13,6 +13,9 @@ import { firestore, storage } from '../../firebase/firebase';
 import { deleteObject, ref } from 'firebase/storage';
 import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import DeletePostModal from '../../components/Profile/DeletePostModal';
+import PostCss from '../../components/FeedPosts/Post.module.css';
+import speaker from "../../components/FeedPosts/speaker-filled-audio-tool.png"
+import muteButton from "../../components/FeedPosts/mute.png"
 
 const SinglePostModal = ({ authUser, posts, notification, isOpen, onClose }) => {
     const { userProfile, isLoading } = useGetUserProfileById(notification?.adminId);
@@ -22,6 +25,13 @@ const SinglePostModal = ({ authUser, posts, notification, isOpen, onClose }) => 
     const decrementPostsCount = useUserProfileStore((state) => state.deletePost);
     const colorMode = useUserProfileStore((state) => state.colorMode);
     const isDarkMode = colorMode === 'dark';
+    const videoPlayerRef = useRef(null);
+    const [isMuted, setIsMuted] = useState(false);
+
+    const handleMute = (isMuted) => {
+        videoPlayerRef.current.muted = isMuted;
+        setIsMuted(isMuted);
+    }
     const showToast = useShowToast();
     const handleDeletePost = async () => {
         if (isDeleting) return;
@@ -79,7 +89,36 @@ const SinglePostModal = ({ authUser, posts, notification, isOpen, onClose }) => 
                                 maxH={{ base: '50vh', md: "full" }}
                             >
                                 {posts.type === 'video' ?
-                                    <VideoPlayer video={posts.imageURL} maxH={'70vh'} /> :
+                                    <Box
+                                        position="relative"
+                                        width="100%"
+                                        height="500px"
+                                        maxWidth="600px"
+                                        display="flex"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                    >
+                                        {/* Blurred Background */}
+                                        <Box
+                                            position="absolute"
+                                            top={0}
+                                            left={0}
+                                            width="100%"
+                                            height="100%"
+                                            background={`linear-gradient(#e66465, #9198e5)`}
+                                            backgroundSize="cover"
+                                            backgroundPosition="center"
+                                            filter="blur(20px)"
+                                            zIndex={0}
+                                        />
+                                        <VideoPlayer video={posts.imageURL} maxH={'70vh'} videoPlayerRef={videoPlayerRef} />
+                                        {isMuted ?
+                                            <img className={PostCss.video_player_mute_button} src={muteButton} onClick={() => handleMute(false)} alt="speaker" />
+                                            :
+                                            <img className={PostCss.video_player_mute_button} src={speaker} onClick={() => handleMute(true)} alt="speaker" />
+                                        }
+                                    </Box>
+                                    :
                                     <Box
                                         position="relative"
                                         width="100%"

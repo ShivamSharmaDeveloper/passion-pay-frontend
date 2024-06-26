@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import usePostStore from "../store/postStore";
 import useShowToast from "./useShowToast";
-import useUserProfileStore from "../store/userProfileStore";
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
 
 const useGetSinglePost = () => {

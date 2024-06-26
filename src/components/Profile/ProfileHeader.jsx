@@ -5,7 +5,7 @@ import EditProfile from "./EditProfile";
 import useFollowUser from "../../hooks/useFollowUser";
 import FollowedUsersModal from "./FollowedUsersModal";
 import { useState } from "react";
-import { EditIcon, SettingsIcon } from "@chakra-ui/icons";
+import { EditIcon } from "@chakra-ui/icons";
 import ProfileMenu from "../Sidebar/ProfileMenu";
 
 const ProfileHeader = ({ isDarkMode }) => {

@@ -1,19 +1,8 @@
-import { Avatar, Button, Divider, Flex, Image, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, Skeleton, SkeletonCircle, Text, VStack, useDisclosure } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Avatar, Flex, Skeleton, SkeletonCircle, Text, VStack, useDisclosure } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import useGetUserProfileById from '../../hooks/useGetUserProfileById';
 import { timeAgo } from '../../utils/timeAgo';
 import useAuthStore from '../../store/authStore';
-import usePostStore from '../../store/postStore';
-import { useState } from 'react';
-import useUserProfileStore from '../../store/userProfileStore';
-import { deleteObject, ref } from 'firebase/storage';
-import { firestore, storage } from '../../firebase/firebase';
-import { arrayRemove, deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import useShowToast from '../../hooks/useShowToast';
-import { MdDelete } from 'react-icons/md';
-import Caption from '../../components/Comment/Caption';
-import Comment from '../../components/Comment/Comment';
-import PostFooter from '../../components/FeedPosts/PostFooter';
 import useGetSinglePost from '../../hooks/useGetSinglePost';
 import SinglePostModal from './SinglePostModal';
 

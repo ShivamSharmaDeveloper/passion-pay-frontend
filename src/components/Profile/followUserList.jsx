@@ -1,5 +1,5 @@
-import { Avatar, Button, Flex, Text } from '@chakra-ui/react'
-import React from 'react'
+import { Avatar, Button, Flex, Text } from '@chakra-ui/react';
+import React from 'react';
 import useFollowUser from '../../hooks/useFollowUser';
 
 const FollowUserList = ({ user, authUser, visitingAnotherProfileAndAuth, isDarkMode }) => {

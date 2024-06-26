@@ -3,7 +3,6 @@ import useShowToast from "./useShowToast";
 import { auth, firestore } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import useAuthStore from "../store/authStore";
-import { loggedin } from "../services/authService";
 
 const useLogin = () => {
 	const showToast = useShowToast();

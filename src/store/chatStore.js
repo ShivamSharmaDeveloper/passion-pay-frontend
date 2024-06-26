@@ -1,16 +1,8 @@
+import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
 import { create } from "zustand";
-import useAuthStore from "./authStore";
-import { collection, doc, getDoc, onSnapshot, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
 
-// Hook to get the current user
-// const useAuth = () => {
-//     const authUser = useAuthStore((state) => state.user);
-//     return authUser;
-// };
-
 const useChatStore = create((set) => {
-    // const currentUser = useAuth();
 
     return {
         chatId: "null",

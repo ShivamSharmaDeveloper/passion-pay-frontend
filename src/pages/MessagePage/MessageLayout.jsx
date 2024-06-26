@@ -1,8 +1,8 @@
-import { Box, Container, Flex } from '@chakra-ui/react'
-import React from 'react'
+import { Box, Container } from '@chakra-ui/react';
+import React from 'react';
 // import Sidebar from '../../components/Sidebar/Sidebar'
-import Chat from '../../components/Messages/Chat'
-import Sidebar from '../../components/Messages/Sidebar'
+import Chat from '../../components/Messages/Chat';
+import Sidebar from '../../components/Messages/Sidebar';
 import MessageCss from './Message.module.css';
 
 const MessageLayout = () => {

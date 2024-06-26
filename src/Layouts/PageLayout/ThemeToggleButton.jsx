@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useColorMode, Button, IconButton, Text, Flex } from '@chakra-ui/react';
+import { useColorMode, Button, IconButton, Text } from '@chakra-ui/react';
 import { SunIcon, MoonIcon } from '@chakra-ui/icons';
 import useUserProfileStore from '../../store/userProfileStore';
 

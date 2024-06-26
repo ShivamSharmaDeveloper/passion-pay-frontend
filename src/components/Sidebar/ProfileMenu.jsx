@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react';
-import { Menu, MenuButton, MenuItem, MenuList, Avatar, Box, IconButton, Button } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Menu, MenuButton, MenuItem, MenuList, Box, IconButton, Button } from '@chakra-ui/react';
 import { useColorMode } from '@chakra-ui/react';
 import { SunIcon, MoonIcon, SettingsIcon } from '@chakra-ui/icons';
 import { BiLogOut } from 'react-icons/bi';
-import useAuthStore from '../../store/authStore';
 import useLogout from '../../hooks/useLogout';
 import useUserProfileStore from '../../store/userProfileStore';
 
 const ProfileMenu = () => {
-    const authUser = useAuthStore((state) => state.user);
     const { colorMode, toggleColorMode } = useColorMode();
     const { handleLogout } = useLogout();
     const setColorMode = useUserProfileStore((state) => state.setColorMode);

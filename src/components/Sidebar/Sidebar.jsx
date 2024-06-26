@@ -1,12 +1,10 @@
-import { Box, Button, Flex, Image, Link, Text, Tooltip, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Button, Flex, Link, Text, Tooltip, useBreakpointValue } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { InstagramLogo, InstagramMobileLogo } from "../../assets/constants";
 
 import { BiLogOut } from "react-icons/bi";
 import useLogout from "../../hooks/useLogout";
 import SidebarItems from "./SidebarItems";
 import ThemeToggleButton from "../../Layouts/PageLayout/ThemeToggleButton";
-import ProfileMenu from "./ProfileMenu";
 import useUserProfileStore from "../../store/userProfileStore";
 
 const Sidebar = () => {

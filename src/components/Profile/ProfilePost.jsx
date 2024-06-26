@@ -23,7 +23,7 @@ import PostFooter from "../FeedPosts/PostFooter";
 import useUserProfileStore from "../../store/userProfileStore";
 import useAuthStore from "../../store/authStore";
 import useShowToast from "../../hooks/useShowToast";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { deleteObject, ref } from "firebase/storage";
 import { firestore, storage } from "../../firebase/firebase";
 import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
@@ -31,6 +31,9 @@ import usePostStore from "../../store/postStore";
 import Caption from "../Comment/Caption";
 import VideoPlayer from "../FeedPosts/VideoPlayer";
 import DeletePostModal from "./DeletePostModal";  // Import the modal
+import PostCss from '../FeedPosts/Post.module.css';
+import speaker from "../FeedPosts/speaker-filled-audio-tool.png"
+import muteButton from "../FeedPosts/mute.png"
 
 const ProfilePost = ({ post, isDarkMode }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,7 +44,13 @@ const ProfilePost = ({ post, isDarkMode }) => {
 	const [isDeleting, setIsDeleting] = useState(false);
 	const deletePost = usePostStore((state) => state.deletePost);
 	const decrementPostsCount = useUserProfileStore((state) => state.deletePost);
+	const videoPlayerRef = useRef(null);
+	const [isMuted, setIsMuted] = useState(false);
 
+	const handleMute = (isMuted) => {
+		videoPlayerRef.current.muted = isMuted;
+		setIsMuted(isMuted);
+	}
 	const handleDeletePost = async () => {
 		if (isDeleting) return;
 		setIsDeleting(true);
@@ -144,7 +153,36 @@ const ProfilePost = ({ post, isDarkMode }) => {
 								maxH={{ base: '50vh', md: "full" }}
 							>
 								{post.type === 'video' ?
-									<VideoPlayer video={post.imageURL} maxH={'70vh'} /> : (
+									<Box
+										position="relative"
+										width="100%"
+										height='500px'
+										maxWidth="600px"
+										display="flex"
+										justifyContent="center"
+										alignItems="center"
+									>
+										{/* Blurred Background */}
+										<Box
+											position="absolute"
+											top={0}
+											left={0}
+											width="100%"
+											height="100%"
+											background={`linear-gradient(#e66465, #9198e5)`}
+											backgroundSize="cover"
+											backgroundPosition="center"
+											filter="blur(20px)"
+											zIndex={0}
+										/>
+										<VideoPlayer video={post.imageURL} maxH={'70vh'} videoPlayerRef={videoPlayerRef} />
+										{isMuted ?
+											<img className={PostCss.video_player_mute_button} src={muteButton} onClick={() => handleMute(false)} alt="speaker" />
+											:
+											<img className={PostCss.video_player_mute_button} src={speaker} onClick={() => handleMute(true)} alt="speaker" />
+										}
+									</Box>
+									: (
 										<Box
 											position="relative"
 											width="100%"

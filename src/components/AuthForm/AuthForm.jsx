@@ -1,8 +1,6 @@
 import {
 	Box,
-	Flex,
-	Image,
-	Text,
+	Flex, Text,
 	VStack,
 	Modal,
 	ModalOverlay,

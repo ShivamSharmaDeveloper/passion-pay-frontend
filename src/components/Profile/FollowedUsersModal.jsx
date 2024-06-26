@@ -1,21 +1,16 @@
 import { useState, useEffect } from "react";
 import {
-    Avatar,
-    Box,
-    Button,
-    Flex,
+    Box, Flex,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
     ModalHeader,
     ModalOverlay,
-    Spinner,
-    Text,
+    Spinner
 } from "@chakra-ui/react";
 import useAuthStore from "../../store/authStore";
 import fetchFollowedUsers from "../../hooks/usefetchFollowedUsers"; // Adjust path accordingly
-import useFollowUser from "../../hooks/useFollowUser";
 import FollowUserList from "./followUserList";
 
 const FollowedUsersModal = ({ isOpen, onClose, showing, userProfile, visitingAnotherProfileAndAuth, isDarkMode }) => {

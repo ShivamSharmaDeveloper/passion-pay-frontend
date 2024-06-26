@@ -2,7 +2,6 @@ import { useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase";
 import useShowToast from "./useShowToast";
 import useAuthStore from "../store/authStore";
-import { doLogout } from "../services/authService";
 import useChatStore from "../store/chatStore";
 
 const useLogout = () => {
@@ -14,7 +13,6 @@ const useLogout = () => {
 	const handleLogout = async () => {
 		try {
 			await signOut();
-			await doLogout();
 			localStorage.removeItem("user-info");
 			setEmptyUser();
 			logoutUser();

@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Img from "./img/img.png";
 import Attach from "./img/attach.png";
 import {
   arrayUnion,
   doc,
-  getDoc,
-  serverTimestamp,
-  Timestamp,
-  updateDoc,
+  getDoc, updateDoc
 } from "firebase/firestore";
 import { firestore, storage } from "../../firebase/firebase";
 import { v4 as uuid } from "uuid";

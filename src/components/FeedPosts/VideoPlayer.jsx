@@ -1,15 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
-import playButton from "./play-button-arrowhead.png"
-import speaker from "./speaker-filled-audio-tool.png"
-import muteButton from "./mute.png"
+import playButton from "./play-button-arrowhead.png";
 import PostCss from './Post.module.css';
 
-function VideoPlayer({ children, video, maxH }) {
+function VideoPlayer({ children, video, maxH, videoPlayerRef }) {
     // console.log(maxH)
-    const videoPlayerRef = useRef(null);
+    // const videoPlayerRef = useRef(null);
     const mainBoxRef = useRef(null);
     const [isPlayed, setIsPlayed] = useState(false);
-    const [isMuted, setIsMuted] = useState(false);
+    // const [isMuted, setIsMuted] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -36,10 +34,10 @@ function VideoPlayer({ children, video, maxH }) {
         }
     };
 
-    const handleMute = (isMuted) => {
-        videoPlayerRef.current.muted = isMuted;
-        setIsMuted(isMuted);
-    }
+    // const handleMute = (isMuted) => {
+    //     videoPlayerRef.current.muted = isMuted;
+    //     setIsMuted(isMuted);
+    // }
 
     const handleVideoEnded = () => {
         setIsPlayed(false);
@@ -58,11 +56,11 @@ function VideoPlayer({ children, video, maxH }) {
             {!isPlayed && (
                 <img className={PostCss.video_player_play_button} src={playButton} alt="playButton" onClick={handleVideoClick} />
             )}
-            {isMuted ?
+            {/* {isMuted ?
                 <img className={PostCss.video_player_mute_button} src={muteButton} onClick={() => handleMute(false)} alt="speaker" />
                 :
                 <img className={PostCss.video_player_mute_button} src={speaker} onClick={() => handleMute(true)} alt="speaker" />
-            }
+            } */}
         </div>
     );
 }

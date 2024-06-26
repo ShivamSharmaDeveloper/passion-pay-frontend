@@ -6,9 +6,7 @@ import {
   getDocs,
   setDoc,
   doc,
-  updateDoc,
-  serverTimestamp,
-  getDoc,
+  updateDoc, getDoc
 } from "firebase/firestore";
 import { firestore } from "../../firebase/firebase";
 import useAuthStore from "../../store/authStore";
