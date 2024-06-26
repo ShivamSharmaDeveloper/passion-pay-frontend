@@ -11,15 +11,15 @@ import {
     Text,
 } from "@chakra-ui/react";
 
-const DeletePostModal = ({ isOpen, onClose, onDelete }) => {
+const DeletePostModal = ({ isOpen, onClose, onDelete, message, title }) => {
     return (
         <Modal isOpen={isOpen} onClose={onClose} isCentered closeOnOverlayClick={false}>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Delete Post</ModalHeader>
+                <ModalHeader>{title}</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <Text>Are you sure you want to delete this post?</Text>
+                    <Text>{message}</Text>
                 </ModalBody>
                 <ModalFooter>
                     <Button colorScheme="red" mr={3} onClick={onDelete}>

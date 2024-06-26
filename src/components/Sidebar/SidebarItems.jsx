@@ -12,9 +12,9 @@ const SidebarItems = ({ colorMode }) => {
 		<>
 			<Home colorMode={colorMode} />
 			<Search colorMode={colorMode} />
-			{/* <Messages colorMode={colorMode} /> */}
-			<Notifications authUser={authUser} colorMode={colorMode} />
 			<CreatePost colorMode={colorMode} />
+			{/* <Messages colorMode={colorMode} authUser={authUser} /> */}
+			<Notifications authUser={authUser} colorMode={colorMode} />
 			<ProfileLink colorMode={colorMode} />
 		</>
 	);

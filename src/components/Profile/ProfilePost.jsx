@@ -235,6 +235,8 @@ const ProfilePost = ({ post, isDarkMode }) => {
 				isOpen={deleteModal.isOpen}
 				onClose={deleteModal.onClose}
 				onDelete={handleDeletePost}
+				message={'Are you sure you want to delete this post?'}
+				title={'Delete Post'}
 			/>}
 		</>
 	);

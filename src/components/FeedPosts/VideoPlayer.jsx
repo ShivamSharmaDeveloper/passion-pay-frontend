@@ -5,7 +5,7 @@ import muteButton from "./mute.png"
 import PostCss from './Post.module.css';
 
 function VideoPlayer({ children, video, maxH }) {
-    console.log(maxH)
+    // console.log(maxH)
     const videoPlayerRef = useRef(null);
     const mainBoxRef = useRef(null);
     const [isPlayed, setIsPlayed] = useState(false);

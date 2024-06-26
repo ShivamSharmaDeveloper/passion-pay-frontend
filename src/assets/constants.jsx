@@ -253,3 +253,5 @@ export const FILE_TYPES = [
 		IMAGE_VIDEO: [".png", ".jpg", ".jpeg", ".mp4"]
 	}
 ]
+
+export const maxFileSizeInBytes = 5 * 1024 * 1024; // 5MB

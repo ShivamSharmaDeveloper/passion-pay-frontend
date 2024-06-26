@@ -1,14 +1,15 @@
 import { useState } from "react";
 import useShowToast from "./useShowToast";
+import { maxFileSizeInBytes } from "../assets/constants";
 
 const usePreviewImg = () => {
 	const [selectedFile, setSelectedFile] = useState(null);
 	const showToast = useShowToast();
-	const maxFileSizeInBytes = 5 * 1024 * 1024; // 2MB
+	// const maxFileSizeInBytes = 5 * 1024 * 1024; // 5MB
 
 	const handleImageChange = (e, profile) => {
 		const file = e.target.files[0];
-		console.log(file.type)
+		// console.log(file.type)
 		if (!profile && file && (file.type.startsWith("image/") || file.type.startsWith("video/"))) {
 			if (file.size > maxFileSizeInBytes) {
 				showToast("Error", "File size must be less than 5MB", "error");

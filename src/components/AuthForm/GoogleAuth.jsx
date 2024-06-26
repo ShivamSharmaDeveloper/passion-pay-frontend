@@ -14,7 +14,7 @@ const GoogleAuth = ({ prefix }) => {
 		try {
 			const newUser = await signInWithGoogle();
 			if (!newUser && error) {
-				console.log(error.code)
+				// console.log(error.code)
 				showToast("Error", error.code === 'auth/popup-closed-by-user' || error.code === 'auth/unauthorized-domain' ? 'Please try again' : error.message, "error");
 				return;
 			}
@@ -40,17 +40,17 @@ const GoogleAuth = ({ prefix }) => {
 					posts: [],
 					createdAt: Date.now(),
 					privateAccount: false,
-					messagingUsers: [],
 					followingRequest: [],
 					likedPosts: [],
 					savedPosts: [],
 				};
 				await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
+				await setDoc(doc(firestore, "userChats", newUser.user.uid), {});
 				localStorage.setItem("user-info", JSON.stringify(userDoc));
 				loginUser(userDoc);
 			}
 		} catch (error) {
-			console.log(error.message, error.code)
+			// console.log(error.message, error.code)
 			showToast("Error", 'Please try again', "error");
 		}
 	};	

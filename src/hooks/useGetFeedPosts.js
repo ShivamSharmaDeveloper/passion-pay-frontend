@@ -41,7 +41,7 @@ const useGetFeedPosts = () => {
 
 		try {
 			// debugger;
-			console.log(q)
+			// console.log(q)
 			const querySnapshot = await getDocs(q);
 			const feedPosts = [];
 
@@ -57,7 +57,7 @@ const useGetFeedPosts = () => {
 			}
 			return feedPosts;
 		} catch (error) {
-			console.log(error)
+			// console.log(error)
 			showToast("Error", error.message, "error");
 			return [];
 		} finally {
