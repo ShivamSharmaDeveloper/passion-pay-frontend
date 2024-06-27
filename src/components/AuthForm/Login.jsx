@@ -1,8 +1,10 @@
-import { Alert, AlertIcon, Button, Input } from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Input, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import useLogin from "../../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+	const navigate = useNavigate();
 	const [inputs, setInputs] = useState({
 		email: "",
 		password: "",
@@ -18,6 +20,11 @@ const Login = () => {
 			errorMessage = "Network error. Please check your internet connection.";
 		}
 	}
+
+	const handleForgetPassword = () => {
+		navigate('/forget-password')
+	}
+
 	return (
 		<>
 			<Input
@@ -52,6 +59,7 @@ const Login = () => {
 			>
 				Log in
 			</Button>
+			<Text sx={{ cursor: 'pointer' }} onClick={handleForgetPassword}>Forget Password?</Text>
 		</>
 	);
 };
