@@ -10,7 +10,7 @@ const useGetUserPosts = () => {
 	const { posts, setPosts } = usePostStore();
 	const showToast = useShowToast();
 	const userProfile = useUserProfileStore((state) => state.userProfile);
-	console.log(posts)
+
 	useEffect(() => {
 		const getPosts = async () => {
 			if (!userProfile) return;
