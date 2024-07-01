@@ -39,7 +39,7 @@ const EditProfile = ({ isOpen, onClose, isDarkMode }) => {
 			setSelectedFile(null);
 			onClose();
 		} catch (error) {
-			showToast("Error", error.message, "error");
+			showToast("", error.message, "error");
 		}
 	};
 
@@ -83,6 +83,7 @@ const EditProfile = ({ isOpen, onClose, isDarkMode }) => {
 										type={"text"}
 										value={inputs.fullName || authUser.fullName}
 										onChange={(e) => setInputs({ ...inputs, fullName: e.target.value })}
+										maxLength={25}
 									/>
 								</FormControl>
 
@@ -94,6 +95,7 @@ const EditProfile = ({ isOpen, onClose, isDarkMode }) => {
 										type={"text"}
 										value={inputs.username || authUser.username}
 										onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
+										maxLength={15}
 									/>
 								</FormControl>
 
@@ -105,6 +107,7 @@ const EditProfile = ({ isOpen, onClose, isDarkMode }) => {
 										type={"text"}
 										value={inputs.bio || authUser.bio}
 										onChange={(e) => setInputs({ ...inputs, bio: e.target.value })}
+										maxLength={100}
 									/>
 								</FormControl>
 

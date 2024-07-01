@@ -54,7 +54,7 @@ const SinglePostModal = ({ authUser, posts, notification, isOpen, onClose }) => 
             showToast("Success", "Post deleted successfully", "success");
             deleteModal.onClose(); // Close the delete modal after successful deletion
         } catch (error) {
-            showToast("Error", error.message, "error");
+            showToast("", error.message, "error");
         } finally {
             setIsDeleting(false);
         }

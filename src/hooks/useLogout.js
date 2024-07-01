@@ -17,7 +17,7 @@ const useLogout = () => {
 			setEmptyUser();
 			logoutUser();
 		} catch (error) {
-			showToast("Error", error.message, "error");
+			showToast("", error.message, "error");
 		}
 	};
 

@@ -11,7 +11,7 @@ const useLogin = () => {
 
 	const login = async (inputs) => {
 		if (!inputs.email || !inputs.password) {
-			return showToast("Error", "Please fill all the fields", "error");
+			return showToast("", "Please fill all the fields", "error");
 		}
 		try {
 			const userCred = await signInWithEmailAndPassword(inputs.email, inputs.password);
@@ -21,10 +21,10 @@ const useLogin = () => {
 				localStorage.setItem("user-info", JSON.stringify(docSnap.data()));
 				loginUser(docSnap.data());
 			} else {
-				// showToast("Error", res.response?.data?.message || "Login failed", "error");
+				// showToast("", res.response?.data?.message || "Login failed", "error");
 			}
 		} catch (error) {
-			showToast("Error", error.message, "error");
+			showToast("", error.message, "error");
 		}
 	};
 

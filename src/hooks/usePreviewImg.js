@@ -12,7 +12,7 @@ const usePreviewImg = () => {
 		// console.log(file.type)
 		if (!profile && file && (file.type.startsWith("image/") || file.type.startsWith("video/"))) {
 			if (file.size > maxFileSizeInBytes) {
-				showToast("Error", "File size must be less than 5MB", "error");
+				showToast("", "File size must be less than 5MB", "error");
 				setSelectedFile(null);
 				return;
 			}
@@ -25,7 +25,7 @@ const usePreviewImg = () => {
 			reader.readAsDataURL(file);
 		} else if (profile && file && file.type.startsWith("image/")){
 			if (file.size > maxFileSizeInBytes) {
-				showToast("Error", "File size must be less than 5MB", "error");
+				showToast("", "File size must be less than 5MB", "error");
 				setSelectedFile(null);
 				return;
 			}
@@ -37,7 +37,7 @@ const usePreviewImg = () => {
 
 			reader.readAsDataURL(file);
 		} else {
-			showToast("Error", "Please select an image or video file", "error");
+			showToast("", "Please select an image or video file", "error");
 			setSelectedFile(null);
 		}
 	};

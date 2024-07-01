@@ -14,7 +14,7 @@ const useLikePost = (post) => {
 
 	const handleLikePost = async () => {
 		if (isUpdating) return;
-		if (!authUser) return showToast("Error", "You must be logged in to like a post", "error");
+		if (!authUser) return showToast("", "You must be logged in to like a post", "error");
 		setIsUpdating(true);
 
 		try {
@@ -58,14 +58,14 @@ const useLikePost = (post) => {
 					}
 				}
 			}
-			const userRef = doc(firestore, "users", authUser.uid);
-			await updateDoc(userRef, {
-				likedPosts: isLiked ? arrayRemove(post.id) : arrayUnion(post.id),
-			});
+			// const userRef = doc(firestore, "users", authUser.uid);
+			// await updateDoc(userRef, {
+			// 	likedPosts: isLiked ? arrayRemove(post.id) : arrayUnion(post.id),
+			// });
 		} catch (error) {
 			setIsLiked(isLiked);
 			isLiked ? setLikes(likes - 1) : setLikes(likes + 1);
-			showToast("Error", error.message, "error");
+			showToast("", error.message, "error");
 		} finally {
 			setIsUpdating(false);
 		}

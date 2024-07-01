@@ -40,6 +40,7 @@ const Signup = ({ isPrivacyAccepted, isTermsAccepted }) => {
 				type='text'
 				size={"sm"}
 				value={inputs.username}
+				maxLength={15}
 				onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
 			/>
 			<Input
@@ -48,6 +49,7 @@ const Signup = ({ isPrivacyAccepted, isTermsAccepted }) => {
 				type='text'
 				size={"sm"}
 				value={inputs.fullName}
+				maxLength={25}
 				onChange={(e) => setInputs({ ...inputs, fullName: e.target.value })}
 			/>
 			<InputGroup>
@@ -57,6 +59,7 @@ const Signup = ({ isPrivacyAccepted, isTermsAccepted }) => {
 					type={showPassword ? "text" : "password"}
 					value={inputs.password}
 					size={"sm"}
+					maxLength={16}
 					onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
 				/>
 				<InputRightElement h='full'>

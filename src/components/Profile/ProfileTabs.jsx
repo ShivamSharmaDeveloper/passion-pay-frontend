@@ -1,7 +1,12 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { BsBookmark, BsGrid3X3, BsSuitHeart } from "react-icons/bs";
 
-const ProfileTabs = ({ isDarkMode }) => {
+const ProfileTabs = ({ isDarkMode, activeTab, setActiveTab }) => {
+	const tabs = [
+		{ name: 'posts', icon: BsGrid3X3, label: 'Posts' },
+		{ name: 'saved', icon: BsBookmark, label: 'Saved' },
+		{ name: 'likes', icon: BsSuitHeart, label: 'Likes' },
+	];
 	return (
 		<Flex
 			w={"full"}
@@ -10,32 +15,26 @@ const ProfileTabs = ({ isDarkMode }) => {
 			textTransform={"uppercase"}
 			fontWeight={"bold"}
 		>
-			<Flex borderTop={isDarkMode ? "1px solid white" : "1px solid black"} alignItems={"center"} p='3' gap={1} cursor={"pointer"}>
-				<Box fontSize={20}>
-					<BsGrid3X3 />
-				</Box>
-				<Text fontSize={12} display={{ base: "none", sm: "block" }}>
-					Posts
-				</Text>
-			</Flex>
-
-			<Flex alignItems={"center"} p='3' gap={1} cursor={"pointer"}>
-				<Box fontSize={20}>
-					<BsBookmark />
-				</Box>
-				<Text fontSize={12} display={{ base: "none", sm: "block" }}>
-					Saved
-				</Text>
-			</Flex>
-
-			<Flex alignItems={"center"} p='3' gap={1} cursor={"pointer"}>
-				<Box fontSize={20}>
-					<BsSuitHeart fontWeight={"bold"} />
-				</Box>
-				<Text fontSize={12} display={{ base: "none", sm: "block" }}>
-					Likes
-				</Text>
-			</Flex>
+			{tabs.map((tab) => (
+				<Flex
+					key={tab.name}
+					borderTop={activeTab === tab.name ? "1px solid #3182ce" : "none"}
+					alignItems={"center"}
+					p='3'
+					gap={1}
+					cursor={"pointer"}
+					onClick={() => setActiveTab(tab.name)}
+					// borderBottom={activeTab === tab.name ? "2px solid" : "none"}
+					color={activeTab === tab.name ? "blue.500" : "inherit"}
+				>
+					<Box fontSize={20}>
+						<tab.icon />
+					</Box>
+					<Text fontSize={12} display={{ base: "none", sm: "block" }}>
+						{tab.label}
+					</Text>
+				</Flex>
+			))}
 		</Flex>
 	);
 };

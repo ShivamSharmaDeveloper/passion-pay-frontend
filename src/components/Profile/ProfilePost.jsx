@@ -72,7 +72,7 @@ const ProfilePost = ({ post, isDarkMode }) => {
 			showToast("Success", "Post deleted successfully", "success");
 			deleteModal.onClose(); // Close the delete modal after successful deletion
 		} catch (error) {
-			showToast("Error", error.message, "error");
+			showToast("", error.message, "error");
 		} finally {
 			setIsDeleting(false);
 		}

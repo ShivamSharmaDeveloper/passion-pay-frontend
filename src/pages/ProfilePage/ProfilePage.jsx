@@ -6,12 +6,16 @@ import useGetUserProfileByUsername from "../../hooks/useGetUserProfileByUsername
 import { useParams } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import useUserProfileStore from "../../store/userProfileStore";
+import { useState } from "react";
+import SavedPosts from "../../components/Profile/SavedPosts";
+import LikedPosts from "../../components/Profile/LikedPosts";
 
 const ProfilePage = () => {
 	const { username } = useParams();
 	const { isLoading, userProfile } = useGetUserProfileByUsername(username);
 	const colorMode = useUserProfileStore((state) => state.colorMode);
 	let isDarkMode = colorMode === 'dark';
+	const [activeTab, setActiveTab] = useState('posts'); // State for active tab
 	const userNotFound = !isLoading && !userProfile;
 	if (userNotFound) return <UserNotFound />;
 
@@ -29,8 +33,10 @@ const ProfilePage = () => {
 				borderColor={isDarkMode ? "whiteAlpha.300" : "inherit"}
 				direction={"column"}
 			>
-				<ProfileTabs isDarkMode={isDarkMode} />
-				<ProfilePosts isDarkMode={isDarkMode}  />
+				<ProfileTabs isDarkMode={isDarkMode} activeTab={activeTab} setActiveTab={setActiveTab} />
+				{activeTab === 'posts' && <ProfilePosts isDarkMode={isDarkMode} />}
+				{activeTab === 'saved' && <SavedPosts isDarkMode={isDarkMode} />}
+				{activeTab === 'likes' && <LikedPosts isDarkMode={isDarkMode} />}
 			</Flex>
 		</Container>
 	);
@@ -60,8 +66,8 @@ const ProfileHeaderSkeleton = () => {
 
 const UserNotFound = () => {
 	return (
-		<Flex flexDir='column' textAlign={"center"} mx={"auto"}>
-			<Text fontSize={"2xl"}>User Not Found</Text>
+		<Flex flexDir='column' textAlign={"center"} mx={"auto"} mt={250}>
+			<Text fontSize={"2xl"}>User Not Found or Broke Down☠️!</Text>
 			<Link as={RouterLink} to={"/"} color={"blue.500"} w={"max-content"} mx={"auto"}>
 				Go home
 			</Link>

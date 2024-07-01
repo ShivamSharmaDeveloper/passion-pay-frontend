@@ -15,7 +15,7 @@ const GoogleAuth = ({ prefix }) => {
 			const newUser = await signInWithGoogle();
 			if (!newUser && error) {
 				// console.log(error.code)
-				showToast("Error", error.code === 'auth/popup-closed-by-user' || error.code === 'auth/unauthorized-domain' ? 'Please try again' : error.message, "error");
+				showToast("", error.code === 'auth/popup-closed-by-user' || error.code === 'auth/unauthorized-domain' ? 'Please try again' : error.message, "error");
 				return;
 			}
 			const userRef = doc(firestore, "users", newUser.user.uid);
@@ -41,8 +41,6 @@ const GoogleAuth = ({ prefix }) => {
 					createdAt: Date.now(),
 					privateAccount: false,
 					followingRequest: [],
-					likedPosts: [],
-					savedPosts: [],
 				};
 				await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
 				await setDoc(doc(firestore, "userChats", newUser.user.uid), {});
@@ -51,7 +49,7 @@ const GoogleAuth = ({ prefix }) => {
 			}
 		} catch (error) {
 			// console.log(error.message, error.code)
-			showToast("Error", 'Please try again', "error");
+			showToast("", 'Please try again', "error");
 		}
 	};	
 

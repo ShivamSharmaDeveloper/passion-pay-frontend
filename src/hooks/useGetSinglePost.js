@@ -27,7 +27,7 @@ const useGetSinglePost = () => {
                 return false;
             }
         } catch (error) {
-            showToast("Error", error.message, "error");
+            showToast("", error.message, "error");
             setPosts([]);
         } finally {
             setIsLoading(false);

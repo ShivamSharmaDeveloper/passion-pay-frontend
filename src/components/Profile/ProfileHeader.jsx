@@ -7,12 +7,14 @@ import FollowedUsersModal from "./FollowedUsersModal";
 import { useState } from "react";
 import { EditIcon } from "@chakra-ui/icons";
 import ProfileMenu from "../Sidebar/ProfileMenu";
+import usePostStore from "../../store/postStore";
 
 const ProfileHeader = ({ isDarkMode }) => {
 	const { userProfile } = useUserProfileStore();
 	const [showing, setShowing] = useState("following");  // 'followers' or 'following'
 	const authUser = useAuthStore((state) => state.user);
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const { posts } = usePostStore();
 	const isTabletOrBelow = useBreakpointValue({ base: true, md: false });
 	// State to manage the modal for following users
 	const { isOpen: isFollowingModalOpen, onOpen: openFollowingModal, onClose: closeFollowingModal } = useDisclosure();
@@ -72,7 +74,7 @@ const ProfileHeader = ({ isDarkMode }) => {
 				<Flex alignItems={"center"} gap={{ base: 2, sm: 4 }}>
 					<Text fontSize={{ base: "xs", md: "sm" }}>
 						<Text as='span' fontWeight={"bold"} mr={1}>
-							{userProfile.posts.length}
+							{posts.length || userProfile.posts.length}
 						</Text>
 						Posts
 					</Text>

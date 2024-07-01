@@ -10,8 +10,38 @@ const useSignUpWithEmailAndPassword = () => {
 	const loginUser = useAuthStore((state) => state.login);
 
 	const signup = async (inputs, isPrivacyAccepted, isTermsAccepted) => {
+		// Define validation regular expressions
+		const usernameRegex = /^[a-zA-Z0-9_]+$/;
+		const passwordMinLength = 6;
+		const passwordMaxLength = 16;
+		const fullNameRegex = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/; // Full name validation
+
 		if (!inputs.email || !inputs.password || !inputs.username || !inputs.fullName) {
-			showToast("Error", "Please fill all the fields", "error");
+			showToast("", "Please fill all the fields", "error");
+			return;
+		}
+		// Validate username
+		if (!usernameRegex.test(inputs.username)) {
+			showToast("", "Username can only contain letters, numbers, and underscores", "error");
+			return;
+		}
+		const usersRef = collection(firestore, "users");
+
+		const q = query(usersRef, where("username", "==", inputs.username));
+		const querySnapshot = await getDocs(q);
+
+		if (!querySnapshot.empty) {
+			showToast("", "Username already exists", "error");
+			return;
+		}
+		// Validate full name
+		if (!fullNameRegex.test(inputs.fullName)) {
+			showToast("", "Name can only contain letters, no special characters and not start with space or end", "error");
+			return;
+		}
+		// Validate password length
+		if (inputs.password.length < passwordMinLength || inputs.password.length > passwordMaxLength) {
+			showToast("", `Password must be between ${passwordMinLength} and ${passwordMaxLength} characters long`, "error");
 			return;
 		}
 		if (!isPrivacyAccepted || !isTermsAccepted) {
@@ -19,20 +49,10 @@ const useSignUpWithEmailAndPassword = () => {
 			return;
 		}
 
-		const usersRef = collection(firestore, "users");
-
-		const q = query(usersRef, where("username", "==", inputs.username));
-		const querySnapshot = await getDocs(q);
-
-		if (!querySnapshot.empty) {
-			showToast("Error", "Username already exists", "error");
-			return;
-		}
-
 		try {
 			const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
 			if (!newUser && error) {
-				showToast("Error", error.code === "auth/email-already-in-use" ? "Email is already registered please login" : error.message, "error");
+				showToast("", error.code === "auth/email-already-in-use" ? "Email is already registered please login" : error.message, "error");
 				return;
 			}
 			if (newUser) {
@@ -49,8 +69,6 @@ const useSignUpWithEmailAndPassword = () => {
 					createdAt: Date.now(),
 					privateAccount: false,
 					followingRequest: [],
-					likedPosts: [],
-					savedPosts: [],
 				};
 				await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
 				await setDoc(doc(firestore, "userChats", newUser.user.uid), {});
@@ -58,7 +76,7 @@ const useSignUpWithEmailAndPassword = () => {
 				loginUser(userDoc);
 			}
 		} catch (error) {
-			// showToast("Error", error.message, "error");
+			// showToast("", error.message, "error");
 		}
 	};
 

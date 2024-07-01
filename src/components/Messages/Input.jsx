@@ -144,7 +144,7 @@ const Input = ({ MessageCss }) => {
 
   const handleFileChange = (e) => {
     if (e.target.files[0].size > maxFileSizeInBytes) {
-      showToast("Error", "File size must be less than 5MB", "error");
+      showToast("", "File size must be less than 5MB", "error");
       setFile(null);
       return;
     } else if (e.target.files[0].type.startsWith("image/") || e.target.files[0].type.startsWith("video/")) {

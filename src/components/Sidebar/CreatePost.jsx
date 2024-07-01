@@ -45,7 +45,7 @@ const CreatePost = ({ colorMode }) => {
 			setCaption("");
 			setSelectedFile(null);
 		} catch (error) {
-			showToast("Error", error.message, "error");
+			showToast("", error.message, "error");
 		}
 	};
 	const handleClose = () => {
@@ -157,6 +157,7 @@ function useCreatePost() {
 			caption: caption,
 			likes: [],
 			comments: [],
+			saved: [],
 			createdAt: Date.now(),
 			createdBy: authUser?.uid,
 			type: selectedFile.startsWith("data:image/") ? "image" : "video"
@@ -181,7 +182,7 @@ function useCreatePost() {
 
 			showToast("Success", "Post created successfully", "success");
 		} catch (error) {
-			showToast("Error", error.message, "error");
+			showToast("", error.message, "error");
 		} finally {
 			setIsLoading(false);
 		}

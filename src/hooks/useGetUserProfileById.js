@@ -19,7 +19,7 @@ const useGetUserProfileById = (userId) => {
 					setUserProfile(userRef.data());
 				}
 			} catch (error) {
-				showToast("Error", error.message, "error");
+				showToast("", error.message, "error");
 			} finally {
 				setIsLoading(false);
 			}
